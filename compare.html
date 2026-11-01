@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dubied — Manual and PDF comparison</title>
+  <link rel="stylesheet" href="compare.css?v=3">
+  <script src="compare.mjs?v=2" type="module"></script>
+</head>
+<body class="comparison">
+  <header>
+    <span><a href="index.html">Reconstructed manual</a></span>
+    <span>Scanned PDF</span>
+  </header>
+  <p id="status" role="status">Loading comparison…</p>
+  <noscript>This comparison needs JavaScript. To view it locally, run <code>python3 -m http.server 8765 --bind 127.0.0.1</code> in this folder, then open <code>http://127.0.0.1:8765/compare.html</code>.</noscript>
+  <main>
+    <iframe id="manual" src="index.html" title="Reconstructed manual"></iframe>
+    <iframe id="reference" title="Scanned PDF" srcdoc="<!doctype html><html lang='fr'><head><meta charset='utf-8'><link rel='stylesheet' href='compare.css?v=3'></head><body class='references'></body></html>"></iframe>
+  </main>
+  <details id="notes" class="notes" open>
+    <summary id="notes-title">Transcription notes</summary>
+    <ul id="notes-list"></ul>
+  </details>
+</body>
+</html>

@@ -1,0 +1,1512 @@
+@font-face {
+  font-family: "Libre Bodoni";
+  src: url("assets/libre-bodoni-regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Libre Bodoni";
+  src: url("assets/libre-bodoni-italic.woff2") format("woff2");
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Libre Bodoni";
+  src: url("assets/libre-bodoni-bold.woff2") format("woff2");
+  font-weight: bold;
+  font-display: swap;
+}
+
+/* Fixed-pitch digits and needle marks: one character per needle. */
+@font-face {
+  font-family: "Needles";
+  src: url("assets/needles.woff2") format("woff2");
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color: #111;
+  background: #e6e5e2;
+  font-family: "Libre Bodoni", "Times New Roman", serif;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: #0004;
+  text-underline-offset: 1.5pt;
+}
+
+/* Screen-only front matter (not part of the 1930 printed manual). */
+.front {
+  width: 510.236pt;
+  max-width: 100%;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.front h1 {
+  margin: 0 0 8pt;
+  font-size: 22pt;
+  font-weight: normal;
+  text-align: center;
+}
+
+.front p {
+  margin: 0 0 8pt;
+  text-align: center;
+  text-indent: 0;
+}
+
+.front summary {
+  cursor: pointer;
+  text-align: center;
+}
+
+.front ol {
+  margin: 10pt 0 0;
+  padding: 0;
+  column-count: 2;
+  column-gap: 20pt;
+  list-style: none;
+  line-height: 15pt;
+}
+
+.front ol ol {
+  margin: 0 0 0 12pt;
+  column-count: 1;
+  font-size: 0.9em;
+}
+
+/* Printed page */
+.page {
+  position: relative;
+  width: 510.236pt;
+  max-width: 100%;
+  min-height: 722.835pt;
+  margin: 24px auto;
+  padding: 36pt 26pt 28pt;
+  background: white;
+  box-shadow: 0 2px 12px #0002;
+  font-size: 10.4pt;
+  line-height: 11.4pt;
+  word-spacing: 1.6pt;
+}
+
+.page p,
+.page h2,
+.page h3,
+.page h4,
+.page figure {
+  margin: 0;
+}
+
+.page p {
+  text-align: justify;
+  text-indent: 1em;
+  hyphens: auto;
+}
+
+/* Steps of the instruction lists are set apart by a small gap in the print. */
+.page .cols p.hang + p.hang,
+#page-18 .cols p + p,
+#page-28 .cols p + p {
+  margin-top: 2.6pt;
+}
+
+/* The print sets a wider space after a full stop. */
+.ss {
+  word-spacing: 0.35em;
+}
+
+/* Ditto marks are printed as two commas at mid height. */
+.dit {
+  position: relative;
+  top: -0.35em;
+}
+
+/* Continues from the previous page. */
+.page p.cont,
+.page p.flush {
+  text-indent: 0;
+}
+
+.page h2,
+.page h3,
+.page h4 {
+  font-weight: normal;
+  text-align: center;
+  break-after: avoid;
+}
+
+.page h2 {
+  margin-bottom: 11pt;
+  font-size: 17.7pt;
+  line-height: 20.4pt;
+  letter-spacing: 0.02em;
+}
+
+.page h2.major {
+  margin-top: 14pt;
+  font-size: 20.9pt;
+  line-height: 24.3pt;
+}
+
+.page h3 {
+  margin: 8pt 0 6pt;
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+.page h3.side {
+  font-size: 17.7pt;
+  line-height: 20.4pt;
+  text-align: left;
+}
+
+/* Titles that run to a second line hang it, as printed. */
+.page h3.side,
+.page h3.hung {
+  padding-left: 13pt;
+  text-indent: -13pt;
+}
+
+.page h4 {
+  margin: 6pt 0 3pt;
+  font-size: 10.4pt;
+  font-style: italic;
+  text-align: left;
+}
+
+.page hr {
+  width: 21%;
+  margin: 18pt auto;
+  border: 0;
+  border-top: 1.5pt double #555;
+}
+
+.folio {
+  position: absolute;
+  top: 16pt;
+  right: 22pt;
+  font-size: 8.4pt;
+  line-height: 9.6pt;
+  text-indent: 0 !important;
+}
+
+.page:nth-of-type(even) .folio {
+  right: auto;
+  left: 22pt;
+}
+
+.cols {
+  column-count: 2;
+  column-gap: 20pt;
+}
+
+.cols + .cols,
+figure + .cols {
+  margin-top: 6pt;
+}
+
+.col-break {
+  break-before: column;
+}
+
+/* Figures */
+figure {
+  break-inside: avoid;
+  margin: 6pt 0 8pt !important;
+  text-align: center;
+}
+
+figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+figcaption {
+  margin-top: 3pt;
+  font-size: 8.9pt;
+  line-height: 10.3pt;
+}
+
+figure.right,
+figure.left {
+  width: fit-content;
+  max-width: 55%;
+  margin-top: 0 !important;
+}
+
+figure.right {
+  float: right;
+  margin-left: 8pt !important;
+}
+
+figure.left {
+  float: left;
+  margin-right: 8pt !important;
+}
+
+.pair {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  gap: 10pt;
+  break-inside: avoid;
+}
+
+.pair figure {
+  flex: 0 1 auto;
+}
+
+/* Poulet settings: a label column then one fraction per poulet. */
+.settings {
+  display: flex;
+  justify-content: space-between;
+  gap: 8pt;
+  margin: 6pt 0;
+  break-inside: avoid;
+}
+
+.poulets {
+  border-collapse: separate;
+  border-spacing: 5pt 0;
+  text-align: center;
+  line-height: 13pt;
+}
+
+.poulets th {
+  font-weight: normal;
+}
+
+.poulets thead th {
+  padding-bottom: 3pt;
+  border-bottom: 0.6pt solid;
+  white-space: nowrap;
+}
+
+.poulets tbody th {
+  text-align: right;
+}
+
+.poulets tbody tr:first-child th {
+  padding-top: 5pt;
+}
+
+.poulets tbody tr:first-child td {
+  padding-top: 5pt;
+  border-bottom: 0.4pt solid;
+}
+
+/* Needle diagrams: each character of a row is one needle position. */
+.needles {
+  margin: 5pt auto;
+  border-collapse: collapse;
+  break-inside: avoid;
+  line-height: 12pt;
+}
+
+.needles td {
+  padding: 0;
+  font-family: "Needles", "Courier New", monospace;
+  letter-spacing: 0;
+  word-spacing: 0;
+  font-size: 9.4pt;
+  white-space: pre;
+}
+
+.needles td.shift {
+  padding-left: 0.5ch;
+}
+
+.needles th {
+  padding-left: 8pt;
+  font-weight: normal;
+  text-align: left;
+}
+
+.needles .marks td {
+  font-size: 7.5pt;
+}
+
+/* Generic ruled data table */
+.data {
+  width: 100%;
+  margin: 6pt 0;
+  border-collapse: collapse;
+  font-size: 9pt;
+  line-height: 11pt;
+  text-align: center;
+  break-inside: avoid;
+}
+
+.data caption {
+  padding-bottom: 6pt;
+}
+
+.data th,
+.data td {
+  padding: 2pt 3pt;
+  border: 0.5pt solid #555;
+  font-weight: normal;
+}
+
+.plain,
+.plain td,
+.plain th {
+  border: 0;
+}
+
+/* Full-page tables printed sideways: upright on screen, turned in print. */
+.landscape {
+  overflow-x: auto;
+}
+
+@media screen {
+  .page:has(.landscape) {
+    width: 722.835pt;
+    min-height: 510.236pt;
+  }
+}
+
+.sheet {
+  width: 650pt;
+}
+
+.sheet .data {
+  font-size: 7pt;
+  line-height: 8.2pt;
+}
+
+.sheet .data th,
+.sheet .data td {
+  padding: 1pt 1.5pt;
+}
+
+/* Page-specific layout: pages 3-13 */
+/* Batch a: pages 3-13 */
+#page-3 { font-size: 10.4pt; }
+#page-3 h2 { margin-top: 90pt; margin-bottom: 0; }
+#page-3 hr { width: 10%; margin: 10pt auto 22pt; border-top-width: 0.6pt; border-top-style: solid; }
+#page-3 > p:not(.folio) { margin: 0 4pt 9pt; line-height: 13pt; }
+#page-3 p.large { margin-top: 16pt; font-size: 13.4pt; line-height: 17pt; }
+#page-3 figure { width: fit-content; margin: 22pt 8pt 0 auto !important; }
+#page-4 .data { width: auto; font-size: 10.4pt; line-height: 13pt; text-align: left; }
+#page-4 .data th, #page-4 .data td { padding: 1pt 6pt 1pt 0; }
+#page-4 h2 { margin-top: 14pt; }
+#page-7 #fig-7 { display: flex; align-items: center; justify-content: center; gap: 22pt; }
+#page-7 p.hang { padding-left: 2em; text-indent: -1em; margin-top: 3pt; }
+#page-8 h3 small { font-size: 10.4pt; }
+#page-9 h3:not(.side) { margin: 0 0 12pt; font-size: 17.7pt; line-height: 20.4pt; }
+#page-9 p.hang { padding-left: 1em; text-indent: -1em; margin-bottom: 3pt; }
+#page-9 p.flush { margin: 6pt 0; }
+#page-9 p.warn { margin: 5pt 0; text-indent: 0; font-size: 11.6pt; line-height: 13.6pt; }
+#page-12 p.hang { padding-left: 2em; text-indent: -1em; }
+#page-12 .data { margin: 2pt 0; font-size: 10.4pt; line-height: 12pt; }
+#page-12 .data caption { padding-bottom: 0; }
+#page-12 .data td { width: 50%; padding: 0 14pt; text-align: left; }
+#page-12 .data td:first-child { text-align: right; }
+#page-12 .data td.cross { padding: 0; font-size: 22pt; line-height: 15pt; text-align: center; }
+/* Page-specific layout: pages 14-25 */
+/* Batch b: pages 14-25 */
+
+/* Hanging paragraphs (printed with a hanging indent). */
+#page-14 p.hang {
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+#page-14 .data.poids {
+  margin-top: 0;
+  border: 2.5pt double #333;
+  font-size: 9.4pt;
+  line-height: 11.5pt;
+  table-layout: fixed;
+}
+
+#page-14 .poids td,
+#page-14 .poids thead th {
+  white-space: nowrap;
+}
+
+#page-14 .cols p {
+  margin-bottom: 3pt;
+}
+
+#page-14 .poids caption {
+  padding: 16pt 0 8pt;
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+#page-14 .poids thead th:first-child,
+#page-14 .poids tbody th {
+  width: 33%;
+  white-space: normal;
+  padding-left: 16pt;
+  padding-right: 8pt;
+  text-align: right;
+  border-top: 0;
+  border-bottom: 0;
+}
+
+#page-14 .poids tbody td {
+  height: 40pt;
+  vertical-align: top;
+}
+
+#page-14 .poids tbody th {
+  vertical-align: top;
+}
+
+#page-14 p.note {
+  margin: 3pt 20pt 0;
+  text-indent: 0;
+  text-align-last: center;
+  hyphens: manual;
+}
+
+#page-14 h3.title {
+  margin: 14pt 0 6pt;
+  font-size: 17.7pt;
+  line-height: 20.4pt;
+}
+
+#page-14 p.center {
+  margin-bottom: 10pt;
+  text-align: center;
+  text-indent: 0;
+}
+
+#page-22 .data.tours,
+#page-14 .data.tours,
+#page-21 .data.tours {
+  width: auto;
+  font-size: 10.4pt;
+  line-height: 11.8pt;
+}
+
+#page-22 .tours td,
+#page-14 .tours td,
+#page-21 .tours td {
+  padding: 0 4pt 0 0;
+}
+
+#page-22 .tours td:first-child,
+#page-14 .tours td:first-child,
+#page-21 .tours td:first-child {
+  padding-right: 8pt;
+  text-align: right;
+}
+
+#page-22 .tours td:last-child,
+#page-14 .tours td:last-child,
+#page-21 .tours td:last-child {
+  text-align: left;
+}
+
+/* Lists numbered 1°, 2° and a), b), c) as printed. */
+#page-15 ol {
+  margin: 3pt 0;
+  padding-left: 1.5em;
+}
+
+#page-15 ol ol {
+  padding-left: 1.5em;
+}
+
+#page-15 ol li {
+  text-align: justify;
+  hyphens: auto;
+  margin-bottom: 3pt;
+}
+
+#page-15 .degrees > li::marker {
+  content: counter(list-item) "° ";
+}
+
+#page-15 ol ol > li::marker,
+#page-17 ol > li::marker,
+#page-18 ol > li::marker {
+  content: counter(list-item, lower-alpha) ") ";
+}
+
+#page-15 p.hang {
+  padding-left: 2em;
+  text-indent: -1em;
+}
+
+#page-15 h3.side {
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+#page-15 .cols p {
+  margin-bottom: 3pt;
+}
+
+#page-15 figure .pair {
+  justify-content: space-between;
+  align-items: center;
+}
+
+#page-16 p.hang {
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+#page-16 p.center {
+  text-align: center;
+  text-indent: 0;
+}
+
+#page-16 p.block {
+  margin-left: 1em;
+  text-indent: 0;
+}
+
+#page-16 h3.side {
+  margin-top: 0;
+  font-size: 15.5pt;
+  line-height: 18pt;
+}
+
+#page-16 h3.side small {
+  font-size: 10.4pt;
+}
+
+#page-16 h3.run-in {
+  margin: 8pt 0 3pt;
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+#page-16 .poulets {
+  border-spacing: 12pt 0;
+}
+
+#page-16 .poulets tbody.cross td {
+  padding: 2pt 0;
+  border: 0;
+  font-size: 15pt;
+  line-height: 15pt;
+}
+
+#page-16 .settings {
+  margin: 8pt 0 10pt;
+}
+
+#page-17 ol {
+  margin: 2pt 0;
+  padding-left: 1.5em;
+}
+
+#page-17 ol li {
+  margin-bottom: 2pt;
+  text-align: justify;
+  hyphens: auto;
+}
+
+#page-17 ol li p {
+  text-indent: 0;
+}
+
+#page-17 p.block {
+  margin: 3pt 0 3pt 1em;
+  text-indent: 0;
+}
+
+#page-17 p.flush {
+  margin-top: 2pt;
+}
+
+#page-17 h3.side {
+  margin: 10pt 0 5pt;
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+#page-17 h4 {
+  font-style: normal;
+  font-weight: bold;
+}
+
+#page-18 ol {
+  margin: 2pt 0;
+  padding-left: 1.7em;
+}
+
+#page-18 ol li {
+  margin-bottom: 2pt;
+  text-align: justify;
+  hyphens: auto;
+}
+
+#page-18 h3.side {
+  margin: 9pt 0 5pt;
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+#page-18 h3.side:first-child {
+  margin-top: 0;
+}
+
+#page-18 .cols p {
+  margin-bottom: 2pt;
+}
+
+#page-20 h3.side {
+  font-size: 14.5pt;
+  line-height: 18pt;
+}
+
+#page-20 h3.side small {
+  font-size: 10.4pt;
+}
+
+#page-20 h3.title {
+  margin: 0 0 7pt;
+  font-size: 16pt;
+  line-height: 19pt;
+}
+
+#page-20 h3.title small {
+  font-size: 10.4pt;
+}
+
+#page-20 p.center {
+  margin-bottom: 8pt;
+  text-align: center;
+  text-indent: 0;
+}
+
+#page-20 p.intro {
+  text-indent: 3em;
+}
+
+#page-20 p.hang,
+#page-21 p.hang,
+#page-22 p.hang,
+#page-23 p.hang,
+#page-24 p.hang,
+#page-25 p.hang {
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+#page-20 math {
+  margin: 3pt 0;
+  font-family: "Libre Bodoni", "Times New Roman", serif;
+  font-size: 10.4pt;
+}
+
+#page-20 .settings,
+#page-21 .settings,
+#page-22 .settings {
+  justify-content: center;
+  margin: 0 0 3pt;
+}
+
+#page-20 .poulets,
+#page-21 .poulets,
+#page-22 .poulets {
+  border-spacing: 16pt 0;
+}
+
+#page-20 .poulets tbody.cross td,
+#page-21 .poulets tbody.cross td,
+#page-22 .poulets tbody.cross td {
+  padding: 2pt 0;
+  border: 0;
+  font-size: 15pt;
+  line-height: 15pt;
+}
+
+#page-21 .data.tours,
+#page-22 .data.tours {
+  margin: 3pt auto;
+}
+
+#page-21 figure {
+  margin-top: 0 !important;
+}
+
+#page-21 h3.side,
+#page-22 h3.side,
+#page-23 h3.side {
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+#page-21 h3.side small,
+#page-23 h3.side small {
+  font-size: 10.4pt;
+}
+
+#page-23 h3.side {
+  margin-top: 0;
+}
+
+#page-23 p.center {
+  margin-bottom: 8pt;
+  text-align: center;
+  text-indent: 0;
+}
+
+#page-23 .cols p {
+  margin-bottom: 3pt;
+}
+
+#page-23 .mesures {
+  border: 2pt double #333;
+}
+
+#page-23 .mesures caption {
+  padding: 22pt 0 8pt;
+  font-size: 17.7pt;
+  line-height: 20.4pt;
+  letter-spacing: 0.02em;
+}
+
+#page-23 .mesures thead tr:first-child th {
+  font-weight: bold;
+  letter-spacing: 0.2em;
+}
+
+#page-23 .mesures tbody td,
+#page-23 .mesures tbody th {
+  padding: 1pt 3pt;
+  border-top: 0;
+  border-bottom: 0;
+}
+
+#page-22 .needles {
+  margin: 3pt auto;
+}
+
+#page-22 .pair {
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 8pt;
+}
+
+#page-24 .cols p {
+  margin-bottom: 3pt;
+}
+
+#page-24 h3.side {
+  margin: 12pt 0 8pt;
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+#page-24 .needles {
+  margin: 6pt 0;
+}
+
+#page-24 .needles td {
+  font-size: 8.4pt;
+}
+
+#page-24 .needles th {
+  padding-left: 4pt;
+  font-size: 7.5pt;
+}
+
+#page-24 .needles .marks td {
+  font-size: 8.4pt;
+  line-height: 7pt;
+}
+
+#page-25 h2 {
+  margin-bottom: 3pt;
+}
+
+#page-25 h2 small {
+  font-size: 10.4pt;
+}
+
+#page-25 p.center {
+  margin-bottom: 8pt;
+  text-align: center;
+  text-indent: 0;
+}
+
+#page-25 h3.side {
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+#page-25 h3.side small {
+  font-size: 10.4pt;
+}
+
+#page-25 .cols p.hang {
+  margin-bottom: 2pt;
+}
+
+#page-25 #fig-30 {
+  margin-top: 18pt !important;
+}
+
+#page-25 p.center.tight {
+  margin-bottom: 0;
+}
+
+/* Page-specific layout: pages 26-37 */
+/* Batch c: hanging steps as printed (first line out, continuation lines in) */
+#page-26 p.hang,
+#page-27 p.hang {
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+/* Printed left-aligned, smaller than the shared h3.side */
+#page-26 h3 {
+  text-align: left;
+}
+
+#page-27 .cols h2,
+#page-27 .cols h3 {
+  text-align: left;
+}
+
+#page-27 .cols h2 {
+  margin-top: 0;
+}
+
+/* "1er exemple:" labels are printed large and roman; default h4 is small italic */
+#page-28 h4.ex,
+#page-29 h4.ex {
+  margin: 5pt 0 2pt;
+  font-size: 13pt;
+  line-height: 14.8pt;
+  font-style: normal;
+}
+
+/* Crossed poulet settings: two fractions above an X, two below */
+#page-28 .cross {
+  border-spacing: 9pt 0;
+  line-height: 11.5pt;
+}
+
+#page-28 .settings {
+  margin: 3pt 0;
+}
+
+#page-28 .poulets thead th {
+  padding-bottom: 1pt;
+}
+
+#page-28 .poulets tbody tr:first-child td {
+  padding-top: 2pt;
+}
+
+#page-28 .cross tbody tr:nth-child(4) td {
+  border-bottom: 0.4pt solid;
+}
+
+#page-28 .cross tbody tr:nth-child(3) td {
+  font-size: 13pt;
+  line-height: 12pt;
+}
+
+/* "etc." printed between the two rows of a needle diagram */
+#page-28 .needles .etc,
+#page-29 .needles .etc {
+  padding: 0 0 0 4pt;
+  font-family: inherit;
+  font-size: 8pt;
+  vertical-align: middle;
+}
+
+/* Marks must keep the needle pitch; superscripts must not open the line */
+#page-29 .needles .marks td {
+  font-size: 9.4pt;
+}
+
+/* Section headings printed left-aligned at the shared h3 size */
+#page-30 h3,
+#page-31 h3 {
+  text-align: left;
+}
+
+/* Steps inset by one indent, then hanging */
+#page-31 p.hang {
+  padding-left: 2em;
+  text-indent: -1em;
+}
+
+/* Text-sized table with ditto marks */
+#page-31 .data {
+  font-size: inherit;
+  line-height: inherit;
+  text-align: left;
+}
+
+#page-31 .data td {
+  padding: 0 2pt;
+}
+
+/* Page 32 steps, with the bracketed group marked * */
+#page-32 p.hang {
+  padding-left: 1em;
+  text-indent: -1em;
+  margin-bottom: 1.5pt;
+}
+
+#page-32 h3 {
+  text-align: left;
+}
+
+#page-32 .star {
+  position: relative;
+  margin-left: 1.3em;
+  padding-left: 3pt;
+  border-left: 0.5pt solid;
+}
+
+#page-32 .star p.sign {
+  position: absolute;
+  top: 50%;
+  left: -1.1em;
+  margin-top: -6pt;
+  text-indent: 0;
+}
+
+/* Page 33: list numbered 1°, 2°… as printed */
+#page-33 ol {
+  margin: 0;
+  padding-left: 2.2em;
+}
+
+#page-33 ol li {
+  text-align: justify;
+}
+
+#page-33 ol li::marker {
+  content: counter(list-item) "°  ";
+}
+
+/* Section headings printed left-aligned */
+#page-34 h3,
+#page-35 h3 {
+  text-align: left;
+}
+
+/* Page-specific layout: pages 38-49 */
+/* Batch d: pages 38-49 */
+
+/* Hanging steps as printed (first line out, continuation lines in). */
+#page-40 p.hang, #page-41 p.hang, #page-42 p.hang, #page-46 p.hang,
+#page-47 p.hang, #page-48 p.hang, #page-49 p.hang {
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+/* A hanging paragraph resumed after a figure or a page turn. */
+#page-42 p.hang.cont, #page-48 p.hang.cont, #page-49 p.hang.cont {
+  text-indent: 0;
+}
+
+/* Line cut by a page or column turn stays full measure. */
+#page-39 p.more, #page-42 p.more, #page-44 p.more, #page-47 p.more, #page-49 p.more {
+  text-align-last: justify;
+}
+
+/* Indented list items with a hanging second line. */
+#page-38 p.item {
+  padding-left: 2em;
+  text-indent: -1em;
+}
+
+/* Labels printed large and roman; default h4 is small italic. */
+#page-39 h4.ex, #page-40 h4.ex {
+  margin: 7pt 0 3pt;
+  font-size: 13pt;
+  line-height: 14.8pt;
+  font-style: normal;
+}
+
+/* Section labels are left-aligned in these chapters. */
+#page-40 h3, #page-41 h3, #page-42 h3, #page-43 h3, #page-44 h3,
+#page-45 h3, #page-46 h3, #page-48 h3, #page-49 h3 {
+  text-align: left;
+}
+
+/* Centred subtitle lines. */
+#page-40 h2.major {
+  font-size: 29pt;
+  line-height: 33pt;
+}
+
+#page-40 h2:not(.major) {
+  margin-bottom: 8pt;
+  font-size: 20pt;
+  line-height: 23pt;
+}
+
+#page-40 h2:not(.major) a {
+  font-size: 13pt;
+}
+
+#page-40 p.center, #page-46 p.center {
+  margin-bottom: 4pt;
+  text-indent: 0;
+  text-align: center;
+}
+
+/* Crossed poulet settings: two fractions above an X, two below. */
+#page-40 .cross, #page-41 .cross, #page-42 .cross {
+  border-spacing: 12pt 0;
+}
+
+#page-38 .cross {
+  border-spacing: 8pt 0;
+}
+
+#page-38 .cross tbody tr:nth-child(4) td, #page-40 .cross tbody tr:nth-child(4) td,
+#page-41 .cross tbody tr:nth-child(4) td, #page-42 .cross tbody tr:nth-child(4) td {
+  border-bottom: 0.4pt solid;
+}
+
+#page-38 .cross tbody tr:nth-child(3) td, #page-40 .cross tbody tr:nth-child(3) td,
+#page-41 .cross tbody tr:nth-child(3) td, #page-42 .cross tbody tr:nth-child(3) td {
+  font-size: 15pt;
+  line-height: 15pt;
+}
+
+/* A single unlabelled setting is centred in its column. */
+#page-40 .settings, #page-41 .settings, #page-42 .settings, #page-46 .settings {
+  justify-content: center;
+}
+
+/* Fig. 54: caption printed beside the picture, at its foot. */
+#page-44 #fig-54 {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6pt;
+}
+
+#page-44 #fig-54 figcaption {
+  white-space: nowrap;
+}
+
+/* Underlined cross-reference line after the gilet. */
+#page-43 p.voir {
+  width: fit-content;
+  margin: 10pt auto 16pt;
+  border-bottom: 1pt solid;
+  font-size: 13pt;
+  line-height: 15pt;
+  text-indent: 0;
+}
+
+/* Ditto marks under "Tricoter 9 tours. Faire une diminution à droite." */
+#page-46 .ditto {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+#page-46 .ditto td {
+  padding: 0;
+}
+
+/* Heel setting: the X stands between two stacked columns of fractions. */
+#page-46 .talon {
+  border-spacing: 12pt 0;
+}
+
+#page-46 .talon tbody tr:first-child td[rowspan] {
+  border-bottom: 0;
+  font-size: 15pt;
+  vertical-align: middle;
+}
+
+#page-46 .talon tbody tr:nth-child(3) td {
+  border-bottom: 0.4pt solid;
+}
+
+/* Page 49: the diagram crosses both columns; source order stays the reading order. */
+#page-49 .flow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20pt;
+}
+
+#page-49 .flow .a { grid-area: 1 / 1; }
+#page-49 .flow .c { grid-area: 1 / 2; }
+#page-49 .flow .needles { grid-area: 2 / 1 / 2 / 3; }
+#page-49 .flow .b { grid-area: 3 / 1; }
+#page-49 .flow .d { grid-area: 3 / 2; }
+
+/* Stars must keep the needle pitch. */
+#page-49 .needles td {
+  letter-spacing: 3.54pt;
+}
+
+#page-49 .needles .marks td {
+  font-size: 9.4pt;
+  line-height: 8pt;
+}
+
+/* Printed on one line. */
+#page-49 h3.side {
+  font-size: 15.5pt;
+  white-space: nowrap;
+}
+
+/* Black-framed notice closing the page. */
+#page-49 p.notice {
+  padding: 22pt 44pt;
+  border: 4pt solid #111;
+  font-size: 16pt;
+  line-height: 21pt;
+  text-align: center;
+  text-indent: 0;
+}
+
+/* Page-specific layout: pages 50-55 */
+.tab-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 14pt;
+  align-items: center;
+  margin: 0 0 5pt;
+  padding: 0 4pt;
+  text-align: center;
+}
+
+.tab-head h2 {
+  display: contents;
+}
+
+.tab-name {
+  grid-row: 1 / span 2;
+  font-size: 20pt;
+  line-height: 24pt;
+}
+
+.tab-subject {
+  font-size: 16.5pt;
+  line-height: 20pt;
+}
+
+.tab-spec {
+  margin: 0;
+  font-size: 8.5pt;
+  line-height: 9.6pt;
+  text-indent: 0;
+  white-space: nowrap;
+}
+
+.tab-gauge {
+  font-size: 15.5pt;
+  line-height: 19pt;
+}
+
+.brace {
+  display: inline-flex;
+  flex-direction: column;
+  padding-left: 9pt;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 40' preserveAspectRatio='none'%3E%3Cpath d='M7 .5C3 .5 4 4 4 10v5c0 3-1 5-3 5 2 0 3 2 3 5v5c0 6-1 9.500 3 9.500' fill='none' stroke='%23111' stroke-width='.9'/%3E%3C/svg%3E") left center / 6pt 100% no-repeat;
+  font-size: 8pt;
+  line-height: 8.8pt;
+  text-align: left;
+  vertical-align: middle;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+/* A tall brace: fixed ends and point, with straight stems that stretch between them. */
+.data td.suite {
+  position: relative;
+  padding-left: 17pt;
+}
+
+.data td.suite::before {
+  content: "";
+  position: absolute;
+  top: 5pt;
+  bottom: 4pt;
+  left: 4.6pt;
+  width: 4.4pt;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4.400 87' preserveAspectRatio='none'%3E%3Cpath d='M.2 0C1.6.2 2.5 1.2 2.5 4V30C2.5 38 2.7 41.5 4.2 43.5 2.7 45.5 2.5 49 2.5 57V83C2.5 85.800 1.6 86.800.2 87 1 86 1.2 85 1.2 83V57C1.2 49 1.6 45.5 3 43.5 1.6 41.500 1.2 38 1.2 30V4C1.2 2 1 1 .2 0Z' fill='%23111'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.tab-frame {
+  border: 1.5pt solid #111;
+}
+
+.tab-frame .data {
+  margin: 0;
+  border-style: hidden;
+}
+
+.tab-frame .tab-head {
+  margin: 0;
+  padding: 3pt 4pt;
+  border-top: 1.5pt solid #111;
+  border-bottom: 1.5pt solid #111;
+}
+
+:is(#page-52, #page-53, #page-54, #page-55) .tab-frame tbody tr {
+  height: 30pt;
+}
+
+#page-50 .tab-head,
+#page-51 .tab-head {
+  align-items: start;
+}
+
+#page-58 .tab-name {
+  font-size: 18pt;
+}
+
+#page-58 .tab-subject {
+  grid-column: 2;
+  font-size: 19pt;
+}
+
+#page-58 .tab-subject small {
+  font-size: 13pt;
+}
+
+#page-58 .tab-head .jauge {
+  grid-column: 2;
+}
+
+/* Batch e: pages 50-55, sideways data tables */
+:is(#page-50, #page-51, #page-52, #page-53, #page-54, #page-55) .data thead th:not(:first-child) {
+  height: 66pt;
+  padding: 1pt 0.5pt;
+  font-size: 5.8pt;
+  line-height: 6.6pt;
+  writing-mode: vertical-rl;
+  text-orientation: sideways;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+:is(#page-50, #page-51, #page-52, #page-53, #page-54, #page-55) .data tbody th {
+  text-align: left;
+  white-space: nowrap;
+}
+
+:is(#page-50, #page-51, #page-52, #page-53, #page-54, #page-55) .data td.stack {
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* Page-specific layout: pages 56-62 */
+/* Batch f: pages 56-60, 62 */
+
+/* Hanging steps as printed (first line out, continuation lines in). */
+#page-56 p.hang,
+#page-57 p.hang {
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+/* Column headings in this pattern are smaller than the shared h3.side. */
+#page-56 h3.side,
+#page-57 h3.side {
+  margin: 9pt 0 5pt;
+  font-size: 13pt;
+  line-height: 14.8pt;
+}
+
+#page-56 h2 small {
+  font-size: 13pt;
+}
+
+#page-56 p.center {
+  margin-bottom: 10pt;
+  text-align: center;
+  text-indent: 0;
+}
+
+/* Poulet settings set out as a cross: two fractions, a ×, two fractions. */
+#page-56 .cross td,
+#page-57 .cross td {
+  min-width: 42pt;
+}
+
+#page-56 .cross tr:nth-child(4) td,
+#page-57 .cross tr:nth-child(4) td {
+  border-bottom: 0.4pt solid;
+}
+
+#page-56 .cross tr.x td,
+#page-57 .cross tr.x td {
+  font-size: 16pt;
+  line-height: 15pt;
+}
+
+/* Page 58: sideways table with upright sheet, vertical column heads as printed. */
+#page-58 .jauge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8pt;
+  font-size: 8.4pt;
+  line-height: 9pt;
+}
+
+#page-58 .jauge h3 {
+  margin: 0 4pt 0 0;
+  font-size: 15pt;
+  line-height: 17pt;
+}
+
+#page-58 .jauge p {
+  hyphens: manual;
+  white-space: nowrap;
+}
+
+#page-58 .fx {
+  border-collapse: collapse;
+}
+
+#page-58 .fx td {
+  padding: 0 1pt;
+  border: 0;
+  font-size: 7.6pt;
+  line-height: 7.4pt;
+  text-align: center;
+}
+
+#page-58 .data {
+  margin: 2pt 0 0;
+  border: 1.5pt solid #333;
+}
+
+#page-58 .data thead th {
+  height: 92pt;
+  padding: 2pt 0;
+  writing-mode: vertical-rl;
+  text-orientation: sideways;
+  transform: rotate(180deg);
+  line-height: 8.2pt;
+  white-space: normal;
+}
+
+#page-58 .data > tbody > tr > td {
+  height: 26pt;
+}
+
+#page-58 .data th[scope="rowgroup"] {
+  padding: 4pt 3pt 3pt;
+  border-left: 0;
+  border-right: 0;
+}
+
+/* Page 59 yarn table: double frame, heavy rule between the two gauge groups. */
+#page-59 .data {
+  border: 2.5pt double #333;
+}
+
+#page-59 .data thead {
+  border-bottom: 1.5pt double #333;
+}
+
+#page-59 .data tbody + tbody {
+  border-top: 1.2pt solid #111;
+}
+
+#page-59 .data td:nth-child(3),
+#page-59 .data td:nth-child(5) {
+  padding-left: 12pt;
+  text-align: left;
+}
+
+/* Row labels set in a bold grotesque in the print (32 and 36 only on page 59). */
+#page-58 tbody th strong,
+#page-59 tbody th strong {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+
+
+/* Denser than the print here: tighter word spacing keeps letters and lines as printed. */
+#page-5,
+#page-28,
+#page-41,
+#page-46,
+#page-47,
+#page-56 {
+  word-spacing: 0;
+}
+
+#page-56 {
+  letter-spacing: -0.12pt;
+}
+
+#page-61 {
+  padding-top: 26pt;
+  padding-bottom: 8pt;
+}
+
+#page-61 h2.major {
+  margin-top: 0;
+}
+
+#page-61 .settings {
+  margin: 3pt 0;
+}
+
+@page {
+  size: 180mm 255mm;
+  margin: 0;
+}
+
+@media print {
+  :root {
+    background: white;
+  }
+
+  .front {
+    display: none;
+  }
+
+  .page {
+    margin: 0;
+    box-shadow: none;
+    break-after: page;
+    overflow: hidden;
+  }
+
+  .page:last-child {
+    break-after: auto;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .landscape {
+    overflow: visible;
+  }
+
+  .sheet {
+    transform: rotate(-90deg) translateX(-100%);
+    transform-origin: top left;
+  }
+}
