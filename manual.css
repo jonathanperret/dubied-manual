@@ -47,7 +47,7 @@ a {
 
 /* Screen-only front matter (not part of the 1930 printed manual). */
 .front {
-  width: 510.236pt;
+  width: 540.236pt;
   max-width: 100%;
   margin: 24px auto;
   padding: 0 16px;
@@ -111,16 +111,22 @@ a {
 /* Printed page */
 .page {
   position: relative;
-  width: 510.236pt;
+  width: 540.236pt;
   max-width: 100%;
-  min-height: 722.835pt;
+  min-height: 728.5pt;
   margin: 24px auto;
-  padding: 36pt 26pt 28pt;
+  padding: 50pt 45pt 55pt;
   background: white;
   box-shadow: 0 2px 12px #0002;
-  font-size: 10.4pt;
-  line-height: 11.4pt;
+  font-size: 10.25pt;
+  line-height: 11.15pt;
   word-spacing: 1.6pt;
+}
+
+/* All sizes are the print's at 1.054 scale, but the inner margin is widened to
+   match the outer one: the print's is lost in the fold. */
+.page:has(.landscape) {
+  padding: var(--left) 0 0 calc(728.5pt - var(--top) - var(--w));
 }
 
 .page p,
@@ -135,6 +141,11 @@ a {
   text-align: justify;
   text-indent: 1em;
   hyphens: auto;
+}
+
+/* Paragraph gaps vary by page in the print: set --para-gap on the page. */
+.page .cols > p + p:not(.col-break) {
+  margin-top: var(--para-gap, 0);
 }
 
 /* Steps of the instruction lists are set apart by a small gap in the print. */
@@ -169,11 +180,23 @@ a {
   break-after: avoid;
 }
 
+/* Printed headings are lighter than Libre Bodoni's regular, with wide word spaces:
+   a thin white stroke over the glyphs slims them. */
+.page h2,
+.page h3 {
+  word-spacing: 0.22em;
+  -webkit-text-stroke: var(--slim) white;
+}
+
+.page {
+  --slim: 0.22pt;
+}
+
 .page h2 {
   margin-bottom: 11pt;
-  font-size: 17.7pt;
-  line-height: 20.4pt;
-  letter-spacing: 0.02em;
+  font-size: 15.8pt;
+  line-height: 18.4pt;
+  letter-spacing: 0.015em;
 }
 
 .page h2.major {
@@ -183,15 +206,22 @@ a {
 }
 
 .page h3 {
-  margin: 8pt 0 6pt;
+  margin: 11.5pt 0 8pt;
   font-size: 13pt;
   line-height: 14.8pt;
 }
 
 .page h3.side {
-  font-size: 17.7pt;
-  line-height: 20.4pt;
+  font-size: 15.8pt;
+  line-height: 18.4pt;
+  letter-spacing: 0.015em;
   text-align: left;
+}
+
+/* No gap above whatever opens a column. */
+.page .cols > :first-child,
+.page .cols > .col-break {
+  margin-top: 0;
 }
 
 /* Titles that run to a second line hang it, as printed. */
@@ -208,17 +238,25 @@ a {
   text-align: left;
 }
 
+/* Two hairlines closing a chapter; a single short one inside a column. */
 .page hr {
-  width: 21%;
+  width: 95pt;
+  height: 1.8pt;
   margin: 18pt auto;
-  border: 0;
-  border-top: 1.5pt double #555;
+  border: solid #666;
+  border-width: 0.35pt 0;
+}
+
+.page .cols hr {
+  width: 42pt;
+  height: 0;
+  border-bottom: 0;
 }
 
 .folio {
   position: absolute;
-  top: 16pt;
-  right: 22pt;
+  top: 25pt;
+  right: 45pt;
   font-size: 8.4pt;
   line-height: 9.6pt;
   text-indent: 0 !important;
@@ -226,12 +264,12 @@ a {
 
 .page:nth-of-type(even) .folio {
   right: auto;
-  left: 22pt;
+  left: 45pt;
 }
 
 .cols {
   column-count: 2;
-  column-gap: 20pt;
+  column-gap: 14pt;
 }
 
 .cols + .cols,
@@ -258,9 +296,12 @@ figure img {
 }
 
 figcaption {
-  margin-top: 3pt;
-  font-size: 8.9pt;
+  margin-top: 8pt;
+  font-size: 8.6pt;
   line-height: 10.3pt;
+  letter-spacing: 0.035em;
+  word-spacing: 0.25em;
+  -webkit-text-stroke: 0.1pt white;
 }
 
 figure.right,
@@ -392,54 +433,119 @@ figure.left {
 
 /* Full-page tables printed sideways: upright on screen, turned in print. */
 .landscape {
+  margin-left: -8pt;
+  padding-left: 8pt;
   overflow-x: auto;
 }
 
 @media screen {
   .page:has(.landscape) {
-    width: 722.835pt;
-    min-height: 510.236pt;
+    box-sizing: border-box;
+    width: 728.5pt;
+    min-height: 540.236pt;
+  }
+
+  /* The folio stays at the head of the page, so it reads sideways here as on the scan. */
+  .page:has(.landscape) .folio {
+    top: 45pt;
+    right: 25pt;
+    bottom: auto;
+    left: auto;
+    writing-mode: vertical-rl;
+  }
+
+  .page:nth-of-type(odd):has(.landscape) .folio {
+    top: auto;
+    bottom: 45pt;
   }
 }
 
 .sheet {
-  width: 650pt;
-}
-
-.sheet .data {
-  font-size: 7pt;
-  line-height: 8.2pt;
-}
-
-.sheet .data th,
-.sheet .data td {
-  padding: 1pt 1.5pt;
+  width: var(--w);
 }
 
 /* Page-specific layout: pages 3-13 */
-/* Batch a: pages 3-13 */
-#page-3 { font-size: 10.4pt; }
-#page-3 h2 { margin-top: 90pt; margin-bottom: 0; }
-#page-3 hr { width: 10%; margin: 10pt auto 22pt; border-top-width: 0.6pt; border-top-style: solid; }
-#page-3 > p:not(.folio) { margin: 0 4pt 9pt; line-height: 13pt; }
-#page-3 p.large { margin-top: 16pt; font-size: 13.4pt; line-height: 17pt; }
-#page-3 figure { width: fit-content; margin: 22pt 8pt 0 auto !important; }
-#page-4 .data { width: auto; font-size: 10.4pt; line-height: 13pt; text-align: left; }
-#page-4 .data th, #page-4 .data td { padding: 1pt 6pt 1pt 0; }
-#page-4 h2 { margin-top: 14pt; }
-#page-7 #fig-7 { display: flex; align-items: center; justify-content: center; gap: 22pt; }
-#page-7 p.hang { padding-left: 2em; text-indent: -1em; margin-top: 3pt; }
-#page-8 h3 small { font-size: 10.4pt; }
-#page-9 h3:not(.side) { margin: 0 0 12pt; font-size: 17.7pt; line-height: 20.4pt; }
-#page-9 p.hang { padding-left: 1em; text-indent: -1em; margin-bottom: 3pt; }
-#page-9 p.flush { margin: 6pt 0; }
-#page-9 p.warn { margin: 5pt 0; text-indent: 0; font-size: 11.6pt; line-height: 13.6pt; }
+#page-5, #page-6, #page-9, #page-10, #page-11, #page-12 { padding-bottom: 36pt; }
+#page-5, #page-6, #page-7, #page-10 { --para-gap: 3pt; }
+#page-8 { --para-gap: 4.5pt; }
+#page-9 { --para-gap: 2pt; }
+#page-12 { --para-gap: 1.5pt; }
+#page-3 { word-spacing: 2.5pt; }
+#page-3 h2 { margin-top: 64pt; margin-bottom: 0; letter-spacing: 0.16em; font-size: 20pt; }
+#page-3 hr { width: 42pt; height: 0; margin: 19pt auto 23pt; border-bottom: 0; }
+#page-3 > p:not(.folio) { margin: 0 0 6.5pt; line-height: 14.3pt; text-indent: 22pt; }
+#page-3 p.large { margin-top: 12pt; font-size: 13.4pt; line-height: 18.2pt; word-spacing: 1.6pt; }
+#page-3 figure { width: fit-content; margin: 23pt 18pt 0 auto !important; }
+#page-4 #fig-1 { margin-top: 46pt !important; padding-right: 2pt; }
+#page-4 #fig-1 figcaption { margin-top: 26pt; padding-right: 10pt; letter-spacing: 0.025em; }
+#page-4 h2 { margin: 18pt 0 6.6pt; letter-spacing: 0.1em; }
+#page-4 .data { width: auto; margin: 0 0 0 29pt; font-size: 10.25pt; line-height: 13.4pt; text-align: left; }
+#page-4 .data th, #page-4 .data td { padding: 0 8pt 0 0; }
+#page-4 .cols { column-gap: 8pt; }
+#page-5 { word-spacing: 1pt; }
+#page-5 .folio { visibility: hidden; }
+#page-5 h2.major { margin: -2pt 0 13.5pt; font-size: 19.7pt; word-spacing: 0.38em; }
+#page-5 #fig-2 { margin-top: 10pt !important; }
+#page-5 #fig-2 img { border: 0.5pt solid #222; }
+#page-5 #fig-2 figcaption { margin-top: 12pt; }
+#page-6 #fig-3 { position: relative; margin: 11pt 0 53pt !important; padding-left: 5pt; }
+#page-6 #fig-3 figcaption { position: absolute; right: 107pt; bottom: 15pt; margin: 0; }
+#page-6 .pair { justify-content: flex-start; gap: 7pt; margin-bottom: 11pt; padding-left: 5pt; }
+#page-6 .pair figcaption { margin-top: 13.5pt; }
+#page-6 #fig-5 figcaption { margin-top: 19.5pt; }
+#page-7 { word-spacing: 1.2pt; }
+#page-7 #fig-6 { margin-bottom: 33pt !important; }
+#page-7 #fig-6 img { position: relative; left: 16pt; }
+#page-7 #fig-6 figcaption { margin-top: 18pt; }
+#page-7 #fig-7 { display: flex; align-items: center; gap: 35pt; margin: 33pt 0 0 25pt !important; }
+#page-7 #fig-7 img { margin: 0; }
+#page-7 #fig-7 figcaption { margin: 0; }
+#page-7 p.hang { padding-left: 2em; text-indent: -1em; }
+#page-8 h3.side { margin-bottom: 17pt; }
+#page-8 h3.side + p + p + p + p + h3.side, #page-8 h3.side:last-of-type { margin: 26pt 0 14pt; }
+#page-8 h3 small { font-size: 10.25pt; }
+#page-8 #fig-8 { margin-bottom: 20pt !important; }
+#page-8 #fig-8 img { position: relative; left: -12pt; }
+#page-8 #fig-8 figcaption { margin-top: 5pt; }
+#page-8 #fig-9 { margin-top: 14pt !important; }
+#page-8 #fig-9 figcaption { margin-top: 22pt; }
+#page-8 .cols hr { margin: 27pt auto 0; }
+#page-9 h2.major { margin: 11pt 0 18pt; font-size: 25pt; line-height: 30pt; }
+#page-9 h3:not(.side) { margin: 0 0 27pt; font-size: 16pt; line-height: 18.4pt; letter-spacing: 0.015em; }
+#page-9 p.hang { padding-left: 1em; text-indent: -1em; margin-bottom: 1pt; }
+#page-9 .cols p.flush { margin: 11pt 0 7pt; }
+#page-9 .cols p.warn { margin: 6pt 0 5pt; text-indent: 0; font-size: 11.6pt; line-height: 13.6pt; letter-spacing: 0.07em; }
+#page-9 #fig-10 figcaption { margin-top: 16pt; }
+#page-10 #fig-11 { position: relative; float: right; width: 301.5pt; max-width: none; margin: 2pt -232pt 14pt 8pt !important; }
+#page-10 #fig-11 figcaption { position: absolute; top: 100%; left: 0; right: 0; margin-top: 8pt; }
+#page-10 .cols { height: 407pt; column-fill: auto; }
+#page-10 .cols p:first-child + p { margin-top: 0; }
+#page-10 h3.side { margin-bottom: 5pt; }
+#page-10 .pair { justify-content: space-between; margin-top: -11pt; padding: 0 48pt 0 43pt; }
+#page-10 .pair figcaption { margin-top: 1pt; }
+#page-11 figure { margin: 2.4pt -8pt 0 0 !important; padding-left: 8pt; }
+#page-11 figcaption { margin-top: 3pt; }
+#page-11 #fig-15 { margin-top: 39pt !important; }
+#page-11 #fig-15 figcaption { position: relative; margin-top: -6pt; line-height: 18pt; }
+#page-12 > .cols:first-of-type { height: 278pt; column-fill: auto; word-spacing: 0.7pt; }
+#page-12 #fig-16 { width: 244.5pt; max-width: none; margin: 0 0 0 13pt !important; }
+#page-12 #fig-16 figcaption { margin-top: 12pt; margin-bottom: 8pt; text-align: center; }
+#page-12 #fig-16 + p + p { padding-left: 41pt; }
+#page-12 #fig-16 + p + p + p.hang::before { content: ""; float: left; width: 41pt; height: 140pt; }
 #page-12 p.hang { padding-left: 2em; text-indent: -1em; }
-#page-12 .data { margin: 2pt 0; font-size: 10.4pt; line-height: 12pt; }
-#page-12 .data caption { padding-bottom: 0; }
-#page-12 .data td { width: 50%; padding: 0 14pt; text-align: left; }
+#page-12 > .cols:last-of-type { height: 304pt; column-fill: auto; }
+#page-12 #fig-17 { margin-bottom: 0 !important; }
+#page-12 #fig-17 figcaption { margin-top: 4pt; }
+#page-12 hr { margin: 10pt auto 17pt; }
+#page-12 .needles td { letter-spacing: 4.4pt; }
+#page-12 .needles td.shift { padding-left: 5pt; }
+#page-12 .needles span { position: relative; top: 0.22em; margin: 0 4pt 0 2pt; letter-spacing: -1.6pt; }
+#page-12 .data { margin: 2pt 0; font-size: 10.25pt; line-height: 12pt; }
+#page-12 .data caption { padding-bottom: 0; text-align: left; }
+#page-12 .data + .data caption { padding-left: 23pt; }
+#page-12 .data td { width: 50%; padding: 0 19pt; text-align: left; }
 #page-12 .data td:first-child { text-align: right; }
-#page-12 .data td.cross { padding: 0; font-size: 22pt; line-height: 15pt; text-align: center; }
+#page-12 .data td.cross { padding: 0; font-size: 30pt; line-height: 21pt; text-align: center; }
 /* Page-specific layout: pages 14-25 */
 /* Batch b: pages 14-25 */
 
@@ -887,6 +993,111 @@ figure.left {
   margin-bottom: 0;
 }
 
+/* Review of pages 13-22 against the scan */
+#page-14, #page-15, #page-16, #page-17, #page-18, #page-19 { padding-bottom: 36pt; }
+#page-20, #page-21, #page-22 { padding-bottom: 28pt; }
+
+/* The small column headings are set tight in the print, with a small numeral. */
+:is(#page-15, #page-17, #page-18, #page-21, #page-22) h3.side { --slim: 0.12pt; letter-spacing: 0; word-spacing: 0.08em; }
+:is(#page-17, #page-18) h3.side { padding-left: 0; text-indent: 0; }
+:is(#page-17, #page-18) h3.side small { font-size: 9.4pt; -webkit-text-stroke: 0; }
+
+/* Wide-pitch needle rows: dots on the baseline at the back, at mid height in front. */
+:is(#page-19, #page-21) .needles { margin: 5pt auto; }
+#page-21 .needles { margin: 11pt auto 6pt; }
+:is(#page-19, #page-21, #page-22) .needles td { letter-spacing: 3.9pt; }
+:is(#page-19, #page-21, #page-22) .needles td.shift { padding-left: 5pt; }
+:is(#page-19, #page-21, #page-22) .needles th { padding-left: 3pt; }
+
+/* The X of crossed poulet settings is large and thin. */
+:is(#page-16, #page-20, #page-21, #page-22) .poulets tbody.cross td { font-size: 28pt; }
+:is(#page-21, #page-22) .poulets tbody.cross td { padding: 0; line-height: 16pt; }
+
+#page-13 { padding-bottom: 30pt; }
+#page-13 > .cols { height: 648pt; column-fill: auto; }
+#page-13 #fig-18 { width: 283.5pt; max-width: none; margin: 19pt 0 18pt 18pt !important; }
+#page-13 h3.side { margin: 26pt 0 12pt 100pt; padding-left: 0; text-indent: 0; font-size: 17.4pt; line-height: 20pt; letter-spacing: 0; word-spacing: 0.15em; }
+#page-13 h3.side + p::before { content: ""; float: left; width: 100pt; height: 112pt; }
+#page-13 #fig-18 + p + p::before { content: ""; float: right; width: 85pt; height: 215pt; shape-outside: inset(24pt 0 0 0); }
+#page-13 #fig-19 { width: 280pt; max-width: none; margin: 10pt 20pt 0 -82pt !important; }
+
+#page-14 { padding-top: 56pt; --para-gap: 5pt; }
+#page-14 h2 { margin-bottom: 12.5pt; }
+#page-14 h2.major { margin: 34pt 0 0; font-size: 17pt; line-height: 21pt; letter-spacing: 0; word-spacing: 0.3em; }
+#page-14 h3.title { margin: 22pt 0 7pt; font-size: 16.7pt; word-spacing: 0.2em; }
+#page-14 .poids caption { padding: 24pt 0 14pt; -webkit-text-stroke: var(--slim) white; word-spacing: 0.22em; }
+#page-14 .poids thead tr:first-child th { height: 21pt; }
+#page-14 .poids thead tr + tr th { height: 24pt; }
+#page-14 .poids tbody td { height: 51pt; }
+#page-14 p.note { margin-top: 0; }
+#page-14 hr { margin: 27pt auto 18pt; }
+#page-14 p.center + .cols { margin-top: 12pt; }
+
+#page-15 #fig-20 { margin: 8pt 0 40pt !important; }
+#page-15 #fig-20 .pair { padding: 0 5pt 0 2pt; }
+#page-15 #fig-20 img { margin: 0; }
+#page-15 #fig-20 figcaption { margin-top: 17pt; }
+#page-15 h3.side { margin-bottom: 7pt; }
+
+#page-16 > .cols:first-of-type { height: 70pt; column-fill: auto; orphans: 1; widows: 1; }
+#page-16 > .cols + figure { margin-top: 9pt !important; }
+#page-16 { word-spacing: 0.8pt; }
+#page-16 a { white-space: nowrap; }
+#page-16 hr { margin: 28pt auto 18pt; }
+#page-16 hr:last-child { margin-top: 28pt; }
+#page-16 h2.major { margin: 40pt 0 19pt; font-size: 18.8pt; letter-spacing: 0; word-spacing: 0.3em; }
+#page-16 h3.side { font-size: 16pt; letter-spacing: 0; word-spacing: 0.1em; }
+#page-16 h3.side small { font-size: 12pt; }
+#page-16 h3.run-in { margin: 3pt 0 1pt; font-size: 14.8pt; }
+
+#page-17 h2 { margin: 6pt 0 28pt; font-size: 17.8pt; }
+#page-17 .cols > p:first-child { font-size: 11.8pt; line-height: 17pt; }
+#page-17 ol li { margin-bottom: 4.5pt; }
+#page-17 h3:nth-of-type(3) ~ ol li { margin-bottom: 7pt; }
+#page-17 p.block { margin: 5pt 0 5pt 1em; }
+#page-17 p.block strong { line-height: 13pt; }
+#page-17 p.flush { margin-top: 5pt; }
+#page-17 ol + p.flush { margin-top: 10pt; }
+#page-17 h3.side { margin: 14pt 0 8pt; }
+#page-17 h3.side:first-of-type { margin-top: 20pt; }
+#page-17 h4 { margin: 14pt 0 6pt; }
+#page-17 h4.col-break { margin-top: 0; }
+
+#page-18 { padding-bottom: 30pt; }
+#page-18 > .cols { height: 648pt; column-fill: auto; }
+#page-18 h3.side { margin: 16pt 0 7pt; }
+#page-18 ol li { margin-bottom: 3pt; }
+#page-18 h3:nth-of-type(n+5) { margin: 14pt 0 11pt; }
+#page-18 h3:nth-of-type(n+5) ~ ol li { margin-bottom: 7.5pt; }
+#page-18 h3:nth-of-type(n+5) ~ p { margin-top: 6pt; }
+
+#page-19 { --para-gap: 1pt; }
+#page-19 h2:not(.major) { margin-bottom: 14pt; word-spacing: 0.12em; }
+#page-19 h2.major { margin: 28pt 0 12pt; font-size: 18.6pt; letter-spacing: 0; word-spacing: 0.25em; }
+#page-19 .settings { margin: 7pt 0; }
+
+#page-20 { word-spacing: 0.8pt; }
+#page-20 hr { margin: 12pt auto 18pt; }
+#page-20 h2 + .cols + hr { margin: 16pt auto 18pt; }
+#page-20 .poulets { border-spacing: 30pt 0; }
+#page-20 .poulets td { min-width: 24pt; }
+:is(#page-21, #page-22) .poulets td { min-width: 38pt; }
+#page-20 .col-break ~ p { margin-top: 5pt; }
+#page-20 h3.side { font-size: 14.2pt; line-height: 16pt; letter-spacing: 0; word-spacing: 0.05em; }
+#page-20 h2:not(.major) { margin-bottom: 14pt; font-size: 19.4pt; line-height: 25pt; letter-spacing: 0; word-spacing: 0.08em; --slim: 0.1pt; }
+#page-20 h2.major { margin-top: 26pt; font-size: 18pt; letter-spacing: 0; --slim: 0.1pt; }
+
+#page-21 { padding-top: 59pt; }
+#page-21 #fig-24 { margin-top: -5pt !important; }
+
+#page-22 .cols p.hang + p.hang { margin-top: 1.5pt; }
+#page-22 .cols p.hang + p.hang:not(.col-break ~ p) { margin-top: 2.7pt; }
+#page-22 .data.tours { line-height: 11.3pt; }
+#page-22 .settings { margin-bottom: 1pt; }
+#page-22 figure { margin-bottom: 0 !important; }
+#page-22 figcaption { margin-top: 15pt; }
+#page-22 > .pair { justify-content: flex-start; gap: 42pt; margin-top: 2pt; padding-left: 17pt; }
+
 /* Page-specific layout: pages 26-37 */
 /* Batch c: hanging steps as printed (first line out, continuation lines in) */
 #page-26 p.hang,
@@ -1044,7 +1255,7 @@ figure.left {
 }
 
 /* Line cut by a page or column turn stays full measure. */
-#page-39 p.more, #page-42 p.more, #page-44 p.more, #page-47 p.more, #page-49 p.more {
+#page-7 p.more, #page-13 p.more, #page-19 p.more, #page-34 p.more, #page-36 p.more, #page-37 p.more, #page-39 p.more, #page-42 p.more, #page-44 p.more, #page-47 p.more, #page-49 p.more {
   text-align-last: justify;
 }
 
@@ -1150,17 +1361,7 @@ figure.left {
 
 /* Heel setting: the X stands between two stacked columns of fractions. */
 #page-46 .talon {
-  border-spacing: 12pt 0;
-}
-
-#page-46 .talon tbody tr:first-child td[rowspan] {
-  border-bottom: 0;
-  font-size: 15pt;
-  vertical-align: middle;
-}
-
-#page-46 .talon tbody tr:nth-child(3) td {
-  border-bottom: 0.4pt solid;
+  border-spacing: 8pt 0;
 }
 
 /* Page 49: the diagram crosses both columns; source order stays the reading order. */
@@ -1202,14 +1403,51 @@ figure.left {
   text-indent: 0;
 }
 
-/* Page-specific layout: pages 50-55 */
+/* Page-specific layout: pages 50-55, 58. The sheets have the print's frame size and place:
+   --w frame width; --top from the head of the page to the right end of the sheet in print;
+   --left from the left edge of the page to the top of the sheet in print. */
+#page-50 { --w: 609.6pt; --top: 64pt; --left: 30.5pt; --head: 70pt; --row: 28.3pt; }
+#page-51 { --w: 637.4pt; --top: 48pt; --left: 31.7pt; --head: 71pt; --row: 29.75pt; }
+#page-52 { --w: 615.5pt; --top: 64pt; --left: 29.8pt; --head: 70pt; --row: 32pt; --strip: 60.5pt; }
+#page-53 { --w: 606pt; --top: 65pt; --left: 38pt; --head: 73pt; --row: 29.6pt; --strip: 66.5pt; }
+#page-54 { --w: 635.2pt; --top: 51pt; --left: 43.7pt; --head: 70pt; --row: 29.7pt; --strip: 60.4pt; }
+#page-55 { --w: 633.8pt; --top: 51pt; --left: 43pt; --head: 70pt; --row: 29.7pt; --strip: 61pt; }
+#page-58 { --w: 635.7pt; --top: 52pt; --left: 42pt; --head: 70pt; --row: 29.1pt; }
+
+/* Title blocks: --nw places the centre of the subject, --spec-dx moves the gauge line from it,
+   --pad and --gap are the space under the gauge line and above it. */
+#page-50 .tab-head { --nw: 1.4pt; --name-x: -4.6pt; --subj-ws: 0.12em; --spec-dx: 8.5pt; --pad: 2pt; --gap: 4.5pt; }
+#page-51 .tab-head { --nw: 91pt; --name-x: -1pt; --subj-fs: 18pt; --subj-ws: 0.48em; --spec-dx: -14pt; --pad: 5.2pt; --gap: 1.7pt; }
+#page-52 .tab-head { --nw: 122pt; --name-x: -8pt; --name-y: -2.6pt; --subj-ws: 0.09em; --spec-dx: 9.6pt; --pad: 2pt; --gap: 7pt; }
+#page-52 .tab-frame .tab-head { --nw: 141pt; --name-x: 11pt; --name-y: 4.6pt; --name-fs: 19.3pt; --subj-ws: 0.04em; --spec-dx: -8pt; --pad: 0.2pt; --gap: 0.7pt; }
+#page-53 .tab-head { --nw: 118pt; --name-x: 3.7pt; --name-y: -8pt; --name-fs: 16.7pt; --spec-dx: -2pt; --pad: 1.8pt; --gap: 5pt; }
+#page-53 .tab-frame .tab-head { --name-x: 17pt; --name-y: -3pt; --name-fs: 17.3pt; --subj-ws: 0.05em; --spec-dx: -10pt; --pad: 7.5pt; --gap: 5.8pt; }
+#page-54 .tab-head { --nw: 135pt; --name-y: -7.8pt; --name-fs: 17.5pt; --subj-fs: 18pt; --subj-ws: 0.22em; --spec-dx: -29pt; --pad: 3.7pt; --gap: 6.8pt; }
+#page-54 .tab-frame .tab-head { --nw: 116pt; --name-x: 12pt; --name-y: 0.5pt; --name-fs: 17.7pt; --subj-ws: 0; --spec-dx: -27pt; --pad: 1.6pt; --gap: 0pt; }
+#page-55 .tab-head { --nw: 96pt; --name-x: 1pt; --name-y: -3pt; --name-fs: 18.8pt; --subj-ws: 0.27em; --spec-dx: -49pt; --pad: 2.7pt; --gap: 7.2pt; }
+#page-55 .tab-frame .tab-head { --nw: 105pt; --name-x: 15pt; --name-y: 3pt; --name-fs: 18pt; --subj-ws: 0.24em; --spec-dx: -50pt; --pad: 0.6pt; --gap: 8.7pt; }
+#page-58 .tab-head { --name-x: 1pt; --name-y: -3.7pt; --name-fs: 18.1pt; --subj-fs: 19pt; --subj-ws: 0.3em; --pad: 6.8pt; --gap: 3.2pt; }
+:is(#page-52, #page-53, #page-55) .tab-gauge { font-size: 18pt; }
+
+/* Rule printed under this one title. */
+#page-51 .sheet > .tab-head .tab-name::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -3pt;
+  left: 0;
+  border-bottom: 0.7pt solid #111;
+}
+#page-55 .brace { margin-left: 8pt; }
+
 .tab-head {
   display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 14pt;
-  align-items: center;
-  margin: 0 0 5pt;
-  padding: 0 4pt;
+  grid-template-columns: var(--nw, 0) 1fr;
+  grid-template-rows: auto auto;
+  align-content: end;
+  height: 62pt;
+  margin: 0;
+  padding-bottom: var(--pad, 0);
   text-align: center;
 }
 
@@ -1218,27 +1456,50 @@ figure.left {
 }
 
 .tab-name {
-  grid-row: 1 / span 2;
-  font-size: 20pt;
-  line-height: 24pt;
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  top: var(--name-y, 0);
+  justify-self: start;
+  align-self: center;
+  margin-left: var(--name-x, 0);
+  font-size: var(--name-fs, 20.6pt);
+  line-height: 20pt;
+  letter-spacing: 0;
+  white-space: nowrap;
+  word-spacing: 0.12em;
+  --slim: 0.1pt;
 }
 
 .tab-subject {
-  font-size: 16.5pt;
+  grid-column: 2;
+  margin-bottom: var(--gap, 0);
+  font-size: var(--subj-fs, 16.5pt);
   line-height: 20pt;
+  letter-spacing: 0;
+  white-space: nowrap;
+  word-spacing: var(--subj-ws, 0.25em);
+  --slim: 0.1pt;
 }
 
-.tab-spec {
+.page .tab-spec {
+  grid-column: 2;
+  position: relative;
+  left: var(--spec-dx, 0);
   margin: 0;
-  font-size: 8.5pt;
-  line-height: 9.6pt;
+  font-size: 8.4pt;
+  line-height: 19pt;
+  letter-spacing: 0.06em;
+  text-align: center;
   text-indent: 0;
   white-space: nowrap;
+  word-spacing: 0.15em;
 }
 
 .tab-gauge {
-  font-size: 15.5pt;
-  line-height: 19pt;
+  font-size: 17pt;
+  letter-spacing: 0;
+  word-spacing: 0.1em;
 }
 
 .brace {
@@ -1247,8 +1508,10 @@ figure.left {
   padding-left: 9pt;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 40' preserveAspectRatio='none'%3E%3Cpath d='M7 .5C3 .5 4 4 4 10v5c0 3-1 5-3 5 2 0 3 2 3 5v5c0 6-1 9.500 3 9.500' fill='none' stroke='%23111' stroke-width='.9'/%3E%3C/svg%3E") left center / 6pt 100% no-repeat;
   font-size: 8pt;
-  line-height: 8.8pt;
+  line-height: 8.9pt;
+  letter-spacing: 0.07em;
   text-align: left;
+  word-spacing: 0.2em;
   vertical-align: middle;
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
@@ -1272,8 +1535,12 @@ figure.left {
   -webkit-print-color-adjust: exact;
 }
 
+/* Heavy outer frame with a thin rule just inside it; hairlines between cells. */
 .tab-frame {
-  border: 1.5pt solid #111;
+  padding: 1.6pt;
+  border: 1.4pt solid #111;
+  outline: 0.35pt solid #111;
+  outline-offset: -2.95pt;
 }
 
 .tab-frame .data {
@@ -1282,59 +1549,193 @@ figure.left {
 }
 
 .tab-frame .tab-head {
-  margin: 0;
-  padding: 3pt 4pt;
-  border-top: 1.5pt solid #111;
-  border-bottom: 1.5pt solid #111;
+  height: var(--strip);
+  margin: 0 -1.6pt;
+  padding: 0 1.6pt var(--pad);
+  border-top: 1.4pt solid #111;
+  border-bottom: 2.2pt double #111;
 }
 
-:is(#page-52, #page-53, #page-54, #page-55) .tab-frame tbody tr {
-  height: 30pt;
+.sheet .data {
+  table-layout: fixed;
+  font-size: 8pt;
+  line-height: 8.9pt;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
 }
 
-#page-50 .tab-head,
-#page-51 .tab-head {
-  align-items: start;
+.sheet .data th,
+.sheet .data td {
+  padding: 0;
+  border: 0.4pt solid #222;
 }
 
-#page-58 .tab-name {
-  font-size: 18pt;
+.sheet .data > tbody > tr {
+  height: var(--row);
 }
 
-#page-58 .tab-subject {
-  grid-column: 2;
-  font-size: 19pt;
+.sheet .data thead {
+  border-bottom: 2.2pt double #111;
 }
 
-#page-58 .tab-subject small {
-  font-size: 13pt;
-}
-
-#page-58 .tab-head .jauge {
-  grid-column: 2;
-}
-
-/* Batch e: pages 50-55, sideways data tables */
-:is(#page-50, #page-51, #page-52, #page-53, #page-54, #page-55) .data thead th:not(:first-child) {
-  height: 66pt;
-  padding: 1pt 0.5pt;
-  font-size: 5.8pt;
-  line-height: 6.6pt;
+.sheet .data thead th {
+  height: var(--head);
+  font-size: 6.4pt;
+  line-height: 7.6pt;
+  letter-spacing: 0.05em;
+  word-spacing: 0.1em;
   writing-mode: vertical-rl;
   text-orientation: sideways;
   transform: rotate(180deg);
   white-space: nowrap;
 }
 
-:is(#page-50, #page-51, #page-52, #page-53, #page-54, #page-55) .data tbody th {
+.sheet .data thead th:first-child {
+  font-size: 8pt;
+  letter-spacing: 0.08em;
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+
+.sheet .data tbody th {
+  padding-left: 3pt;
   text-align: left;
   white-space: nowrap;
 }
 
-:is(#page-50, #page-51, #page-52, #page-53, #page-54, #page-55) .data td.stack {
+.sheet .data td.stack {
+  padding-left: 5pt;
   text-align: left;
   white-space: nowrap;
 }
+
+.sheet .data td.suite {
+  padding-left: 13pt;
+  white-space: normal;
+  word-spacing: 0.3em;
+}
+
+/* Rows of the sock tables: labels inset with open leaders, stacks as printed. */
+:is(#page-52, #page-53, #page-54, #page-55) .data { word-spacing: 0.25em; }
+:is(#page-52, #page-53, #page-54, #page-55) .data tbody th { padding-left: 10pt; word-spacing: 0.57em; }
+:is(#page-54, #page-55) .data td.stack:nth-child(9) { padding: 0 0 2pt 9pt; vertical-align: bottom; }
+#page-52 .data td.stack:nth-child(13) { padding-left: 12pt; }
+#page-53 .data td.stack:nth-child(13) { padding-left: 15pt; }
+:is(#page-54, #page-55) .data td.stack:nth-child(13) { padding-left: 10pt; }
+/* Heavy rule after the first column on these pages only. */
+:is(#page-51, #page-54, #page-55) .data :is(thead, tbody) :first-child:is(th) { border-right: 1pt solid #111; }
+#page-50 .data tbody tr:first-child { height: 29.8pt; }
+#page-50 .data tbody tr:last-child { height: 32pt; }
+#page-52 .tab-head + .data { --head: 70.5pt; }
+#page-54 .tab-head + .data { --head: 70.5pt; --row: 30.7pt; }
+#page-55 .tab-head + .data { --head: 70.5pt; --row: 30pt; }
+
+/* Column widths as printed; table-layout: fixed scales any remainder. */
+.sheet .data thead th { width: 28.3pt; }
+.sheet .data thead :first-child { width: 69.3pt; }
+:is(#page-50, #page-51) .data thead :is(:nth-child(10), :nth-child(11), :nth-child(12), :nth-child(14)) { width: 41.9pt; }
+#page-50 .data thead :nth-child(6) { width: 55pt; }
+#page-51 .data thead th { width: 29.35pt; }
+#page-51 .data thead :first-child { width: 68.3pt; }
+#page-51 .data thead :is(:nth-child(10), :nth-child(11), :nth-child(12), :nth-child(14)) { width: 43pt; }
+#page-51 .data thead :nth-child(6) { width: 70pt; }
+#page-52 .data thead th { width: 24pt; }
+#page-52 .data thead :first-child { width: 84.3pt; }
+#page-52 .data thead :nth-child(9) { width: 82pt; }
+#page-52 .data thead :nth-child(10) { width: 42pt; }
+#page-52 .data thead :nth-child(11) { width: 55.8pt; }
+#page-52 .data thead :nth-child(13) { width: 83pt; }
+#page-53 .data thead th { width: 25pt; }
+#page-53 .data thead :first-child { width: 83pt; }
+#page-53 .data thead :nth-child(9) { width: 70.9pt; }
+#page-53 .data thead :nth-child(10) { width: 43pt; }
+#page-53 .data thead :nth-child(11) { width: 57pt; }
+#page-53 .data thead :is(:nth-child(12), :nth-child(14)) { width: 29.3pt; }
+#page-53 .data thead :nth-child(13) { width: 83.8pt; }
+#page-53 .data thead :nth-child(15) { width: 28pt; }
+:is(#page-54, #page-55) .data thead th { width: 29.35pt; }
+:is(#page-54, #page-55) .data thead :first-child { width: 70pt; }
+:is(#page-54, #page-55) .data thead :is(:nth-child(9), :nth-child(13)) { width: 83.3pt; }
+:is(#page-54, #page-55) .data thead :nth-child(11) { width: 70.2pt; }
+:is(#page-54, #page-55) .data thead :nth-child(15) { width: 27pt; }
+/* The lower tables have seven columns and a wide last one. */
+#page-52 .tab-head + .data thead th { width: 42.3pt; }
+#page-53 .tab-head + .data thead th { width: 43pt; }
+:is(#page-52, #page-53) .tab-head + .data thead :first-child { width: 82.6pt; }
+:is(#page-54, #page-55) .tab-head + .data thead th { width: 29.4pt; }
+:is(#page-54, #page-55) .tab-head + .data thead :first-child { width: 69.2pt; }
+.tab-head + .data thead td { width: auto; border-top: 0; }
+
+/* Page 58: two groups in one frame; the gauge heads sit between them. */
+#page-58 .tab-subject small { font-size: 13pt; }
+#page-58 .tab-head .jauge { grid-column: 1 / -1; }
+
+#page-58 .jauge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6.5pt;
+  font-size: 8.4pt;
+  line-height: 9pt;
+  letter-spacing: 0.05em;
+  word-spacing: 0.15em;
+}
+
+#page-58 .jauge h3 {
+  margin: 0 4pt 0 0;
+  font-size: 17pt;
+  line-height: 19pt;
+  letter-spacing: 0;
+  word-spacing: 0.15em;
+  --slim: 0.1pt;
+}
+
+#page-58 .jauge p {
+  white-space: nowrap;
+}
+
+#page-58 .fx {
+  border-collapse: collapse;
+}
+
+#page-58 .fx td {
+  padding: 0 1.5pt;
+  border: 0;
+  font-size: 7.8pt;
+  line-height: 9.6pt;
+  text-align: center;
+}
+
+#page-58 .data thead th {
+  line-height: 9.2pt;
+}
+
+#page-58 .data thead th:first-child {
+  width: 19.5pt;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+#page-58 .data thead th { width: 29.35pt; }
+#page-58 .data thead :is(:nth-child(6), :nth-child(14), :nth-child(17)) { width: 56.5pt; }
+#page-58 .data tbody:first-of-type { border-bottom: 1.4pt solid #111; }
+#page-58 .data tbody:first-of-type th { border-right: 1.2pt solid #111; }
+#page-58 .data tbody th { padding: 0; text-align: center; }
+#page-58 .data th[scope="rowgroup"] { height: 55pt; padding-top: 5.5pt; border: 0; border-bottom: 2.2pt double #111; }
+#page-58 .data td { text-align: center; }
+#page-58 .data > tbody:first-of-type > tr:first-child { height: 35.4pt; }
+#page-58 .data > tbody:first-of-type > tr:last-child { height: 27.8pt; }
+#page-58 .data > tbody:last-of-type { --row: 27.9pt; }
+#page-58 .data > tbody:last-of-type > tr:nth-child(2) { height: 35.9pt; }
+#page-58 .data > tbody:last-of-type > tr:last-child { height: 42.4pt; }
+#page-58 .data > tbody > tr > td:has(br) { padding-bottom: 1.5pt; vertical-align: bottom; }
+#page-58 .data > tbody:last-of-type > tr:last-child > * { padding-bottom: 8pt; vertical-align: middle; }
+
+/* English: longer words in the narrow cells. */
+:is(#page-50, #page-51, #page-54, #page-55):lang(en) .data tbody { letter-spacing: 0.02em; word-spacing: 0; }
+:is(#page-50, #page-51):lang(en) .data td.stack { padding-left: 3pt; }
+:is(#page-50, #page-51):lang(en) .data tbody th { padding-left: 2pt; }
+:is(#page-54, #page-55):lang(en) .data td.stack:nth-child(13) { padding-left: 5pt; }
 
 /* Page-specific layout: pages 56-62 */
 /* Batch f: pages 56-60, 62 */
@@ -1364,100 +1765,6 @@ figure.left {
   text-indent: 0;
 }
 
-/* Poulet settings set out as a cross: two fractions, a ×, two fractions. */
-#page-56 .cross td,
-#page-57 .cross td {
-  min-width: 42pt;
-}
-
-#page-56 .cross tr:nth-child(4) td,
-#page-57 .cross tr:nth-child(4) td {
-  border-bottom: 0.4pt solid;
-}
-
-#page-56 .cross tr.x td,
-#page-57 .cross tr.x td {
-  font-size: 16pt;
-  line-height: 15pt;
-}
-
-/* Page 58: sideways table with upright sheet, vertical column heads as printed. */
-#page-58 .jauge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8pt;
-  font-size: 8.4pt;
-  line-height: 9pt;
-}
-
-#page-58 .jauge h3 {
-  margin: 0 4pt 0 0;
-  font-size: 15pt;
-  line-height: 17pt;
-}
-
-#page-58 .jauge p {
-  hyphens: manual;
-  white-space: nowrap;
-}
-
-#page-58 .fx {
-  border-collapse: collapse;
-}
-
-#page-58 .fx td {
-  padding: 0 1pt;
-  border: 0;
-  font-size: 7.6pt;
-  line-height: 7.4pt;
-  text-align: center;
-}
-
-#page-58 .data {
-  margin: 2pt 0 0;
-  border: 1.5pt solid #333;
-}
-
-#page-58 .data thead th {
-  height: 92pt;
-  padding: 2pt 0;
-  writing-mode: vertical-rl;
-  text-orientation: sideways;
-  transform: rotate(180deg);
-  line-height: 8.2pt;
-  white-space: normal;
-}
-
-#page-58 .data > tbody > tr > td {
-  height: 26pt;
-}
-
-#page-58 .data th[scope="rowgroup"] {
-  padding: 4pt 3pt 3pt;
-  border-left: 0;
-  border-right: 0;
-}
-
-/* Page 59 yarn table: double frame, heavy rule between the two gauge groups. */
-#page-59 .data {
-  border: 2.5pt double #333;
-}
-
-#page-59 .data thead {
-  border-bottom: 1.5pt double #333;
-}
-
-#page-59 .data tbody + tbody {
-  border-top: 1.2pt solid #111;
-}
-
-#page-59 .data td:nth-child(3),
-#page-59 .data td:nth-child(5) {
-  padding-left: 12pt;
-  text-align: left;
-}
-
 /* Row labels set in a bold grotesque in the print (32 and 36 only on page 59). */
 #page-58 tbody th strong,
 #page-59 tbody th strong {
@@ -1467,35 +1774,396 @@ figure.left {
 
 
 
-/* Denser than the print here: tighter word spacing keeps letters and lines as printed. */
-#page-5,
-#page-28,
-#page-41,
-#page-46,
-#page-47,
-#page-56 {
-  word-spacing: 0;
-}
+/* Review of pages 23-32 against the scan */
+:is(#page-23, #page-24, #page-25, #page-26, #page-27, #page-28, #page-29, #page-30, #page-31, #page-32) h3 { --slim: 0.12pt; letter-spacing: 0; word-spacing: 0.08em; }
+:is(#page-26, #page-27, #page-30) h3 small { font-size: 10.4pt; -webkit-text-stroke: 0; }
+:is(#page-25, #page-27, #page-28, #page-30, #page-32) h2 { font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+:is(#page-28, #page-29) h4.ex { -webkit-text-stroke: 0.12pt white; word-spacing: 0.1em; }
+:is(#page-28, #page-29) h4.ex sup { position: relative; top: -0.28em; font-size: 0.68em; line-height: 0; vertical-align: baseline; }
 
-#page-56 {
-  letter-spacing: -0.12pt;
-}
+#page-23 { padding-bottom: 36pt; }
+#page-23 #fig-28 + p { margin-bottom: 0; }
+#page-23 .cols #fig-28 + p + p { margin-top: 0; }
+#page-23 .mesures { margin: 0; table-layout: fixed; }
+#page-23 .mesures caption { padding: 55pt 0 7pt; font-size: 18pt; line-height: 21pt; letter-spacing: 0; word-spacing: 0.3em; -webkit-text-stroke: 0.1pt white; }
+#page-23 .mesures th:first-child { width: 9.6%; }
+#page-23 .mesures thead tr:first-child th { height: 20pt; }
+#page-23 .mesures thead tr:first-child th:first-child { font-size: 10.25pt; letter-spacing: 0; }
+#page-23 .mesures thead tr + tr th { height: 21pt; }
+#page-23 .mesures tbody td, #page-23 .mesures tbody th { padding-top: 0; padding-bottom: 0; }
+#page-23 .mesures tbody tr:first-child > * { padding-top: 3pt; }
+#page-23 .mesures tbody tr:last-child > * { padding-bottom: 3pt; }
+#page-23 .mesures tbody td, #page-23 .mesures tbody th { line-height: 12pt; }
+#page-23 .mesures:first-of-type { border-bottom: 0.8pt solid #333; }
+#page-23 #cardigan-sizes { border-top: 0.5pt solid #333; }
+#page-23 #cardigan-sizes caption { padding: 45pt 0 6pt; border: solid #333; border-width: 0 2pt; border-style: none double; }
 
-#page-61 {
-  padding-top: 26pt;
-  padding-bottom: 8pt;
-}
+#page-24 h2.major { margin: 21pt 0 13pt; font-size: 17pt; letter-spacing: 0; --slim: 0.1pt; }
+#page-24 h3.side { margin: 16pt 0 9pt; }
+#page-24 hr { margin: 44pt auto 0; }
+#page-24 .needles { margin: 7pt 0 5pt; }
+#page-24 .needles td { font-size: 9.4pt; }
+#page-24 .needles th { padding-left: 3pt; font-size: 8pt; }
+#page-24 .needles .marks td { font-size: 9.4pt; line-height: 7pt; }
+#page-24 .needles:nth-of-type(1) td { letter-spacing: 0.65pt; }
+#page-24 .needles:nth-of-type(1) td.shift { padding-left: 2pt; }
+#page-24 .needles:nth-of-type(2) td { letter-spacing: 0.1pt; }
+#page-24 .needles:nth-of-type(2) td.shift { padding-left: 3.3pt; }
 
-#page-61 h2.major {
-  margin-top: 0;
-}
+#page-25 { padding-bottom: 28pt; word-spacing: 1.1pt; }
+#page-25 h2 { margin-bottom: 5pt; }
+#page-25 h2 + p.center { margin-bottom: 19pt; word-spacing: 4pt; }
+#page-25 #fig-29 { margin: -2.4pt 0 10pt !important; }
+#page-25 #fig-29 figcaption { margin-top: 18pt; }
+#page-25 p.hang:has(+ p + figure) { word-spacing: 0.2pt; }
+#page-25 #fig-30 { margin-top: 24pt !important; }
+#page-25 #fig-30 figcaption { margin-top: 23pt; }
 
-#page-61 .settings {
-  margin: 3pt 0;
-}
+#page-26 { padding-bottom: 27pt; }
+#page-26 h3 { margin: 14pt 0 8pt; }
+#page-26 p.hang:has(+ h3 + p.hang) { word-spacing: 0; letter-spacing: -0.12pt; }
+#page-26 #fig-31 { margin: 0 0 18pt !important; }
+#page-26 #fig-31 figcaption { margin-top: 9pt; }
+#page-26 > #fig-32 { margin: 8pt 0 0 !important; padding-right: 16pt; }
+#page-26 > #fig-32 figcaption { margin-top: 2pt; }
+#page-26 .cols > p:not(.hang) + p { margin-top: 2pt; }
+
+#page-27 { padding-top: 57pt; padding-bottom: 28pt; --para-gap: 2.6pt; }
+#page-27 > .cols:first-of-type { height: 250pt; column-fill: auto; }
+#page-27 hr { margin: 27pt auto 26pt; }
+#page-27 .cols h2 { margin-bottom: 22pt; }
+#page-27 .cols h3.hung:first-child { margin-bottom: 4pt; font-size: 13pt; word-spacing: 0.08em; }
+#page-27 .cols h3 { margin: 0 0 12pt; font-size: 13.6pt; word-spacing: 0.08em; }
+#page-27 .poulets tbody tr:first-child > * { padding-top: 3pt; }
+#page-27 .cols h3.hung { margin-bottom: 6pt; }
+#page-27 .col-break ~ .settings { margin: 3pt 0; }
+
+#page-28 { padding-bottom: 28pt; }
+#page-28 h2 { margin-bottom: 13pt; }
+#page-28 h3 { text-align: left; }
+#page-28 .cols p + p { margin-top: 0.8pt; }
+#page-28 h4.ex { margin: 7pt 0 -1pt; }
+#page-28 .settings { margin: 3pt 0 1pt; }
+#page-28 p:has(> em:only-child), #page-28 p:has(+ .needles) { word-spacing: 0.6pt; }
+#page-28 .cross { border-spacing: 0; line-height: 13pt; }
+#page-28 .cross td:first-child { width: 64%; }
+#page-28 .cross td:last-child { padding-right: 14pt; }
+#page-28 .poulets.cross tbody tr:nth-child(3n+1) td { border-bottom: 0; background: linear-gradient(currentColor, currentColor) center bottom / 24pt 0.6pt no-repeat; background-origin: content-box; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+#page-28 .cross tbody tr:nth-child(3) td { padding: 0 0 0 5.6pt; font-size: 28pt; line-height: 16.5pt; -webkit-text-stroke: 0.3pt white; }
+#page-28 .needles td:not(.etc) { letter-spacing: 4.1pt; }
+#page-28 .needles th { padding-left: 2pt; }
+#page-28 .needles td.shift { padding-left: 5pt; }
+#page-28 .needles:nth-of-type(2) td:not(.etc) { letter-spacing: 0.1pt; }
+#page-28 .needles:nth-of-type(2) td.shift { padding-left: 3pt; }
+
+#page-29 .col-break ~ p { margin-top: 2.6pt; }
+#page-29 .cols .col-break + p { margin-top: 0; }
+#page-29 h4.ex { margin: 13pt 0 5pt; }
+#page-29 h4.ex:first-child { margin: -2pt 0 5pt; }
+#page-29 h4:not(.ex) { margin: 11pt 0 5pt; }
+#page-29 { padding-bottom: 28pt; }
+#page-29 .needles th { padding-left: 2pt; }
+#page-29 .needles td.etc { padding-left: 2pt; }
+#page-29 .needles td:not(.etc) { letter-spacing: 0.2pt; }
+#page-29 .needles td.shift { padding-left: 3pt; }
+#page-29 .needles:nth-of-type(2) td:not(.etc) { letter-spacing: 2.5pt; }
+#page-29 .needles:nth-of-type(2) td.shift { padding-left: 4.3pt; }
+#page-29 .needles:nth-of-type(2) .marks td { line-height: 9pt; }
+#page-29 .needles:nth-of-type(3) td:not(.etc) { letter-spacing: 1.3pt; }
+#page-29 .needles:nth-of-type(3) td.shift { padding-left: 4pt; }
+#page-29 .needles:nth-of-type(4) td:not(.etc) { letter-spacing: 1.05pt; }
+#page-29 .needles:nth-of-type(4) td.shift { padding-left: 6pt; }
+#page-29 .needles:nth-of-type(4) th { font-size: 8.4pt; }
+
+#page-30 { padding-bottom: 36pt; --para-gap: 3pt; }
+#page-30 hr { margin: 17pt auto 24pt; }
+#page-30 h2.major { margin: 0 0 30pt; }
+#page-30 > figure { position: relative; margin: 0 !important; }
+#page-30 .pair { justify-content: flex-start; gap: 2pt; }
+#page-30 .pair figure { margin: 0 !important; }
+#page-30 .pair img { margin: 0; }
+#page-30 .pair figcaption { margin-top: 29pt; }
+#page-30 > figure > figcaption { position: absolute; top: 288pt; left: 0; right: 0; margin: 0; }
+#page-30 figure + .cols { margin-top: 11pt; }
+#page-30 figure + .cols p:last-child { word-spacing: 0.5pt; }
+#page-30 figure + .cols p + p { margin-top: 0.6pt; }
+#page-30 figure + .cols .col-break + p { margin-top: 10pt; }
+#page-30 .cols h3 { margin: 7pt 0 8pt; }
+#page-30 .cols h3.hung { margin: 5pt 0 1pt; font-size: 12.1pt; line-height: 13pt; }
+#page-30 .cols h3.col-break, #page-30 figure + .cols h3 { margin-top: 0; }
+#page-30 figure + .cols h3 { margin-bottom: 6pt; }
+
+#page-31 { --para-gap: 3.5pt; }
+#page-31 h3 { margin: 12pt 0 6pt; }
+#page-31 p.more { text-align-last: justify; }
+#page-31 hr { margin: 66pt auto 0; }
+#page-31 .data { width: auto; margin: 7pt 0; white-space: nowrap; }
+#page-31 .data td { padding: 0 1.5pt; text-align: center; }
+#page-31 .data td:nth-child(3), #page-31 .data td:last-child { text-align: left; }
+
+#page-32 { padding-bottom: 36pt; --para-gap: 2.6pt; }
+#page-32 h2 { margin-bottom: 15pt; }
+#page-32 h3 { margin: 0 0 9pt; }
+#page-32 p.flush:has(+ p.flush) { word-spacing: 0.3pt; }
+#page-32 .cols p.hang + p.hang { margin-top: 3.4pt; }
+#page-32 p.hang:last-child { word-spacing: 0; letter-spacing: -0.1pt; }
+#page-32 #fig-36 { margin: 18pt 0 0 -5.3pt !important; width: 225pt; }
+#page-32 #fig-36 img { max-width: none; width: 225pt; }
+#page-32 #fig-36 figcaption { margin-top: 26pt; }
+#page-32 .star { margin-left: 1.1em; padding-left: 7pt; border: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 40' preserveAspectRatio='none'%3E%3Cpath d='M7 .5C3 .5 4 4 4 10v5c0 3-1 5-3 5 2 0 3 2 3 5v5c0 6-1 9.500 3 9.500' fill='none' stroke='%23111' stroke-width='.6'/%3E%3C/svg%3E") left center / 6pt 100% no-repeat; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+#page-32 .star p.sign { left: -1em; }
+
+/* Review of pages 33-42 against the scan */
+:is(#page-33, #page-34, #page-35, #page-36, #page-37, #page-38, #page-39, #page-40, #page-41, #page-42) h3 { --slim: 0.12pt; letter-spacing: 0; word-spacing: 0.08em; }
+:is(#page-36, #page-37, #page-38, #page-39) h3.side { font-size: 16.4pt; word-spacing: 0.2em; --slim: 0.18pt; }
+:is(#page-40, #page-41, #page-42) h3 { font-size: 12.2pt; }
+:is(#page-40, #page-41, #page-42) h3 a { font-size: 10.25pt; -webkit-text-stroke: 0; }
+:is(#page-39, #page-40) h4.ex { -webkit-text-stroke: 0.12pt white; word-spacing: -0.08em; }
+#page-33 h2 { font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+:is(#page-34, #page-36) h2.major { letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-34 h2.major { margin: 12pt 0 21pt; font-size: 25pt; line-height: 28pt; }
+#page-36 h2.major { margin: 0 0 8pt; font-size: 27.5pt; line-height: 30pt; }
+
+/* Crossed settings as on p. 28: large thin X, short rules. */
+:is(#page-38, #page-40, #page-41, #page-42) .poulets.cross tbody tr:nth-child(3n+1) td { border-bottom: 0; background: linear-gradient(currentColor, currentColor) center bottom / 24pt 0.6pt no-repeat; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+:is(#page-40, #page-41, #page-42) .poulets.cross tbody tr:nth-child(3n+1) td { background-size: 40pt 0.6pt; }
+:is(#page-38, #page-40, #page-41, #page-42) .cross tbody tr:nth-child(3) td { padding: 0; font-size: 28pt; line-height: 16.5pt; -webkit-text-stroke: 0.3pt white; }
+:is(#page-40, #page-41, #page-42) .poulets td { min-width: 42pt; }
+#page-38 .poulets td { min-width: 30pt; }
+#page-38 .poulets thead th { border-bottom-width: 0.9pt; }
+
+#page-33 { --para-gap: 0; }
+#page-33 ol li + li { margin-top: 2.6pt; }
+
+#page-34 { padding-bottom: 28pt; --para-gap: 2.6pt; }
+#page-34 > .cols { height: 576pt; column-fill: auto; }
+#page-34 #fig-39 { width: 223pt; margin: 38pt 0 30pt 6pt !important; }
+#page-34 #fig-39 img { max-width: none; }
+#page-34 #fig-39 figcaption { margin: 28pt 6pt 0 0; }
+#page-34 #fig-39 + p { margin-top: 0; }
+#page-34 h3 { font-size: 13.6pt; line-height: 15.5pt; }
+:lang(en) #page-34 h2.major { font-size: 21pt; }
+/* The translation's cut lines are short: full measure would gape. */
+:lang(en) :is(#page-34, #page-36, #page-37, #page-39, #page-42, #page-44, #page-47, #page-49) p.more { text-align-last: auto; }
+:lang(en) #page-39 h3.side { font-size: 15pt; }
+
+#page-35 #fig-41 { margin-top: 9pt !important; }
+#page-35 #fig-41 figcaption { margin-top: 12pt; }
+#page-35 figure + .cols { margin-top: 26pt; }
+#page-35 h3 { font-size: 12.3pt; line-height: 15pt; word-spacing: 0.06em; margin-bottom: 11pt; }
+#page-35 > hr { margin-top: 75pt; }
+
+#page-36 { padding-bottom: 36pt; --para-gap: 2pt; }
+#page-36 h2.major { margin-bottom: 10pt; }
+#page-36 #fig-42 figcaption { margin-top: 13pt; }
+#page-36 #fig-42 { margin-bottom: 14pt !important; }
+
+#page-37 { padding-bottom: 36pt; --para-gap: 3.5pt; }
+#page-37 h3.side:not(.col-break) { margin-top: 20pt; }
+#page-37 #fig-43 figcaption { margin-top: 13pt; line-height: 12pt; }
+#page-37 #fig-43 { margin-bottom: 14pt !important; }
+
+#page-38 { padding-bottom: 36pt; --para-gap: 2pt; }
+#page-38 > .cols { height: 636pt; column-fill: auto; }
+#page-38 p:has(+ .settings) { margin-top: 8pt; }
+#page-38 .settings { margin: 7pt 0 8pt; }
+#page-38 h3.side { margin-top: 14pt; }
+#page-38 .settings + p { word-spacing: 0.6pt; }
+#page-38 > .cols > h3:first-of-type { margin-top: 18pt; }
+:is(#page-38, #page-39) h4:not(.ex) { letter-spacing: 0.02em; -webkit-text-stroke: 0.08pt white; }
+#page-38 h4 { margin: 7pt 0 5pt; }
+
+#page-39 { padding-bottom: 36pt; --para-gap: 0; }
+#page-39 p.more { word-spacing: 0.9pt; }
+#page-39 h4.ex { margin: 16pt 0 4pt; }
+#page-39 h3 { margin-bottom: 10pt; }
+#page-39 p:has(+ h3:last-of-type) { word-spacing: 0.9pt; }
+#page-39 h3:last-of-type { margin-bottom: 8pt; }
+#page-39 #fig-44 figcaption { margin-top: 14pt; }
+#page-39 #fig-44 { margin-bottom: 13pt !important; }
+
+#page-40 { padding-bottom: 36pt; --para-gap: 0; }
+#page-40 #fig-45 { margin-top: 0 !important; }
+#page-40 #fig-45 figcaption { margin-top: 9pt; line-height: 14pt; }
+#page-40 p.col-break:not(.hang) { word-spacing: 2pt; }
+#page-40 h4.ex { margin: 12pt 0 5pt; }
+#page-40 > hr { margin: 20pt auto 27pt; }
+#page-40 h2.major { margin-top: 0; font-size: 25.6pt; line-height: 30pt; }
+#page-40 h2:not(.major) { font-size: 16.9pt; line-height: 20pt; word-spacing: 0.25em; }
+#page-40 h2:not(.major) a { font-size: 11pt; }
+#page-40 p.center { margin-bottom: 8pt; word-spacing: 3pt; }
+#page-40 p.center + .cols > p:first-child { margin-bottom: 7pt; text-indent: 40pt; }
+#page-40 p.hang:has(+ .settings.col-break) { word-spacing: 2.8pt; }
+
+:is(#page-41, #page-42) .settings { margin: 3pt 0 1pt; }
+#page-41 .cols > .settings:first-child, #page-41 .settings.col-break { margin-top: 0; }
+#page-41 #fig-47, #page-42 #fig-48 { margin-bottom: 0 !important; }
+#page-41 { padding-bottom: 36pt; }
+#page-41 #fig-46 { margin-bottom: 15pt !important; }
+#page-41 #fig-46 figcaption { margin-top: 11pt; }
+#page-41 p.hang:has(+ h3) { word-spacing: 0.9pt; }
+#page-41 p.hang:has(+ #fig-47) { word-spacing: 0.8pt; }
+#page-41 h3 { margin-top: 15pt; }
+#page-41 h3 + p.hang { word-spacing: 2.8pt; }
+
+#page-42 { padding-bottom: 36pt; }
+#page-42 #fig-48 figcaption { margin-top: 4pt; }
+#page-42 h3 + p.hang { word-spacing: 2.8pt; }
+#page-42 .col-break ~ h3 { margin: 14pt 0 10.5pt; }
+#page-42 h3:last-of-type ~ p { margin-top: 2.6pt; }
+#page-42 p:has(+ p.more) { word-spacing: 0.9pt; }
+
+/* Review of pages 43-49, 56, 57 against the scan */
+:is(#page-43, #page-44, #page-45, #page-46, #page-47, #page-48, #page-49, #page-56, #page-57) h3 { --slim: 0.12pt; letter-spacing: 0; word-spacing: 0.08em; }
+:is(#page-43, #page-44, #page-45, #page-46, #page-47, #page-48, #page-56) { padding-bottom: 36pt; }
+:is(#page-46, #page-49, #page-56) h2.major { margin: 0 0 7pt; font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+:is(#page-43, #page-44, #page-45) .cols > figure:first-child, :is(#page-43, #page-44, #page-45) .cols > figure.col-break { margin-top: 0 !important; }
+
+/* Crossed settings as on pp. 40-42. */
+:is(#page-46, #page-56, #page-57) .poulets tbody td { border-bottom: 0; }
+#page-46 .talon tbody tr:nth-child(odd) td:not([rowspan]) { background: linear-gradient(currentColor, currentColor) center bottom / 27pt 0.6pt no-repeat; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+#page-46 .talon td[rowspan] { padding: 0; font-size: 28pt; line-height: 16.5pt; vertical-align: middle; -webkit-text-stroke: 0.3pt white; }
+#page-46 .talon td:not([rowspan]) { min-width: 27pt; padding: 0 0 1pt; line-height: 12pt; }
+:is(#page-56, #page-57) .poulets.cross { margin-left: -5pt; border-spacing: 5pt 0; }
+:is(#page-56, #page-57) .poulets.cross td { min-width: 50pt; }
+:is(#page-56, #page-57) .poulets.cross tr:nth-child(3n+1) td { background: linear-gradient(currentColor, currentColor) center bottom / 41pt 0.6pt no-repeat; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+:is(#page-56, #page-57) .poulets.cross tr.x td { padding: 0; font-size: 34pt; line-height: 16.5pt; -webkit-text-stroke: 0.3pt white; }
+
+#page-43 { --para-gap: 2.6pt; }
+#page-43 h2 { margin-bottom: 8pt; font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-43 p.voir { margin-bottom: 24pt; word-spacing: 3.2pt; }
+#page-43 #fig-49 figcaption { margin-top: 18pt; }
+#page-43 .pair figcaption { margin-top: 12pt; }
+
+#page-44 { --para-gap: 5pt; }
+#page-44 p:has(+ #fig-54) { word-spacing: 0.9pt; }
+#page-44 #fig-52 figcaption { margin-top: 11pt; }
+#page-44 #fig-53 figcaption { margin-top: 14pt; }
+#page-44 #fig-53 { margin-bottom: 14pt !important; }
+#page-44 #fig-54 { justify-content: flex-start; gap: 3pt; margin: 12pt 0 0 !important; padding-left: 7pt; }
+#page-44 #fig-54 img { margin: 0; }
+#page-44 #fig-55 { margin: 16pt 0 0 !important; }
+#page-44 #fig-55 figcaption { margin-top: 12pt; }
+#page-44 h3:last-of-type { margin-top: 17.5pt; }
+
+#page-45 { --para-gap: 2pt; }
+#page-45 #fig-56 { margin-bottom: 12pt !important; }
+#page-45 #fig-56 figcaption { margin-top: 14pt; }
+#page-45 #fig-56 + p + p { word-spacing: 0.9pt; }
+#page-45 h3:last-of-type { margin-top: 19.5pt; }
+#page-45 .pair { margin-top: 9pt; }
+#page-45 .pair figcaption { margin-top: 14pt; }
+
+#page-46 h2.major { margin-bottom: 5pt; }
+#page-46 p.center { margin-bottom: 8pt; word-spacing: 3.4pt; }
+#page-46 .cols p.center { margin-bottom: 4pt; word-spacing: 2.5pt; }
+#page-46 .cols { margin-top: 4pt; }
+#page-46 .cols p.hang + p.hang { margin-top: 2pt; }
+#page-46 { word-spacing: 1pt; }
+#page-46 .ditto td { white-space: nowrap; }
+#page-46 .ditto td + td { padding-left: 1.4pt; }
+
+#page-47 { word-spacing: 0.7pt; }
+#page-47 #fig-59 { margin: 0 0 18pt !important; }
+#page-47 #fig-59 figcaption { margin-top: 4pt; }
+
+#page-48 { word-spacing: 1pt; }
+#page-48 .col-break ~ h3 { margin: 10pt 0 6.5pt; }
+
+/* Needle rows of p. 56: flush left, pitch 10pt, dots on the baseline. */
+#page-56 .needles { margin: 2pt 0 0; line-height: 11pt; }
+#page-56 .needles td { letter-spacing: 3.9pt; }
+#page-56 .needles td.shift { padding-left: 5pt; }
+#page-56 .needles th { padding-left: 3pt; }
+#page-56 .needles + .settings { margin-top: 0; }
+#page-56 h2.major { margin: 3pt 0 12pt; }
+#page-56 h2:not(.major) { margin-bottom: 8pt; font-size: 17.3pt; line-height: 20pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-56 p.center { margin-bottom: 12pt; word-spacing: 3.4pt; }
+#page-56 #fig-60 { margin: 11pt 0 8pt !important; }
+#page-56 #fig-60 figcaption { margin-top: 11pt; }
+#page-56 h3.side { margin: 15pt 0 8pt; }
+:is(#page-56, #page-57) .poulets.cross tr:first-child > * { padding-top: 0; }
+:is(#page-56, #page-57) .settings { margin: 5pt 0 4pt; }
+
+#page-57 h3.side { margin: 18pt 0 5.5pt; }
+#page-57 #fig-61 img { margin-left: 57pt; }
+#page-57 #fig-61 figcaption { padding-left: 19pt; }
+#page-57 > hr { margin-top: 42pt; }
+
+#page-49 h2.major { margin: -4pt 0 11pt; }
+#page-49 .flow { column-gap: 14pt; }
+#page-49 :is(.b, .c, .d) p.hang + p.hang { margin-top: 2.6pt; }
+#page-49 h3.side { margin: 17.5pt 0 13pt; word-spacing: 0.13em; }
+#page-49 { padding-bottom: 36pt; }
+#page-49 > hr { margin: 58pt auto 0; }
+#page-49 .c > p:first-child { word-spacing: 0.6pt; }
+
+/* Framed notice: justified, large, in an even heavy frame. */
+#page-49 p.notice { margin-top: 59pt; padding: 26.5pt 28.5pt; border-width: 6.5pt; font-size: 17pt; line-height: 22pt; text-align: justify; text-align-last: center; -webkit-text-stroke: 0.15pt white; }
+
+/* Review of pages 59-62 against the scan */
+#page-59 { padding-bottom: 28pt; word-spacing: 0.8pt; }
+#page-59 h2.major { margin: 4.6pt 0 8pt; font-size: 19.3pt; line-height: 24pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-59 .cols p:nth-child(2):not(.col-break) { margin-top: 5pt; }
+#page-59 > hr { margin: 16pt auto 0; }
+#page-59 > hr + h2.major { margin: 20pt 0 5.5pt; font-size: 18.6pt; line-height: 25.4pt; word-spacing: 0.05em; text-align: justify; text-align-last: center; }
+#page-59 .tab-frame { width: 426pt; margin: 0 auto; padding: 1.4pt; }
+#page-59 .tab-frame .data { table-layout: fixed; font-size: 8.4pt; line-height: 9.2pt; letter-spacing: 0.05em; word-spacing: 0.1em; }
+#page-59 .data th, #page-59 .data td { padding: 0; border: 0.4pt solid #222; }
+#page-59 .data tbody tr { height: 29.2pt; }
+#page-59 .data thead { border-bottom: 2.2pt double #111; }
+#page-59 .data thead th { height: 20pt; line-height: 11.2pt; }
+#page-59 .data thead th[colspan] { border-bottom: 0; }
+#page-59 .data thead tr + tr th { border-top: 0; }
+#page-59 .data thead tr:first-child th:nth-child(1) { width: 42pt; }
+#page-59 .data thead tr:first-child th:nth-child(2) { width: 43pt; }
+#page-59 .data thead tr:first-child th:nth-child(3) { width: 168pt; }
+#page-59 .data thead tr:first-child th:nth-child(4) { width: 84pt; }
+#page-59 .data tbody + tbody { border-top: 1pt solid #111; }
+#page-59 .data :is(thead tr:first-child, tbody tr) > :nth-child(2) { border-right: 1pt solid #111; }
+#page-59 .data :is(thead tr:first-child > :nth-child(3), thead tr:first-child > :nth-child(4), tbody tr > :nth-child(4), tbody tr > :nth-child(5)) { border-right: 1pt solid #111; }
+#page-59 .data td:is(:nth-child(3), :nth-child(5)) { padding-left: 10pt; text-align: left; vertical-align: bottom; padding-bottom: 1.5pt; }
+#page-59 .cols:last-child { margin-top: 25pt; }
+#page-59 .cols:last-child h3.side { margin: 3pt 0 10.6pt; }
+#page-59 .cols:last-child { --para-gap: 3pt; }
+#page-59 .col-break ~ p { --para-gap: 0pt; }
+
+:is(#page-60, #page-62) h3.side { font-size: 16pt; word-spacing: 0.2em; }
+#page-60 { --para-gap: 6pt; }
+#page-60 .col-break ~ * { --para-gap: 3pt; }
+#page-60 #fig-62 img, #page-62 #fig-65 img { margin: 0; }
+#page-60 #fig-62 figcaption { margin-top: 17.5pt; }
+#page-60 h3.side { margin: 29pt 0 15pt; }
+#page-60 h3.side.col-break { margin: -4pt 0 13pt; }
+#page-60 > hr { margin-top: 36pt; }
+
+#page-61 { padding-bottom: 28pt; --para-gap: 1.5pt; }
+#page-61 h2.major { margin: 2.6pt 0 3.5pt; font-size: 18.1pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-61 > p.flush { word-spacing: 3.2pt; }
+#page-61 .cols { margin-top: 18pt; }
+#page-61 h3.side { margin: 0 0 6pt; }
+#page-61 #fig-63 figcaption { margin-top: 1.5pt; }
+#page-61 #fig-64 figcaption { margin-top: 5pt; }
+#page-61 #fig-64 { margin-top: 15pt; }
+#page-61 #fig-64 + p { margin-top: 10pt; }
+#page-61 .col-break ~ * { --para-gap: 0pt; }
+#page-61 h3.col-break { margin: -3pt 0 4pt; }
+#page-61 .col-break ~ h3 { margin: 9pt 0 4pt; }
+#page-61 .settings { margin: 4pt 0 3.5pt; }
+#page-61 .poulets thead th { padding-bottom: 1.5pt; }
+#page-61 .poulets tbody tr:first-child > * { padding-top: 1.5pt; }
+#page-61 .poulets tbody :is(th, td) { line-height: 11.5pt; }
+
+#page-62 { --para-gap: 3pt; }
+#page-62 h2:not(.major) { margin: -5pt 0 16pt; font-size: 19.4pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-62 #fig-65 { margin-top: 11pt; }
+#page-62 #fig-65 figcaption { margin-top: 13pt; }
+#page-62 #fig-65 + p { margin-top: 23pt; }
+#page-62 h3.side { margin: 27pt 0 9pt; }
+#page-62 > hr { margin-top: 44pt; }
 
 @page {
-  size: 180mm 255mm;
+  size: 190.6mm 257mm;
   margin: 0;
 }
 
@@ -1525,6 +2193,10 @@ figure.left {
 
   .landscape {
     overflow: visible;
+  }
+
+  .page:has(.landscape) {
+    padding: var(--top) 0 0 var(--left);
   }
 
   .sheet {

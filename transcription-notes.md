@@ -8,12 +8,13 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 ## General
 
-- **Rendering:** Line spacing is 11.4pt and steps of the instruction lists have a 2.6pt gap on every page, both measured from the scan (11.3-11.6pt and 2.3-4pt in the print).
+- **Rendering:** Line spacing is 11.15pt and steps of the instruction lists have a 2.6pt gap on every page, both measured from the scan (11.3-11.6pt and 2.3-4pt in the print).
+- **Rendering:** The page is the print at 1.054 scale, except the inner margin, widened to match the 45pt outer margin. The print's inner margin is lost in the fold.
 - **Rendering:** The wider space after a sentence is kept, about 1.6 times a word space. Ordinals are flat, as printed (3me, 1ère). The double rules between sections are set at their printed length.
-- **Rendering:** The typeface is Libre Bodoni, not the original, chosen by eye for its letter shapes and stroke contrast. Its digit 1 looks like a small l, as the printed 1 does. Body size is 10.4pt on every page, with wider word spacing as printed, about 5.9pt from word to word. Pages 5, 28, 41, 46, 47 and 56 are denser than the print, so they use narrower word spacing instead of smaller type.
+- **Rendering:** The typeface is Libre Bodoni, not the original, chosen by eye for its letter shapes and stroke contrast. Its digit 1 looks like a small l, as the printed 1 does. Body size is 10.4pt on every page, with wider word spacing as printed, about 5.9pt from word to word. Pages 5, 41, 46, 47 and 56 are denser than the print, so they use narrower word spacing instead of smaller type.
 - **Source:** Pages 14-25 and the tableaux on pages 50-55 were read from 300 dpi renders of whole PDF spreads, because the book fold is not at the centre of the spread and single-page crops clipped the inner column.
 - **Rendering:** Ditto marks in the tables are ,, at mid height, as printed.
-- **Rendering:** Crossed poulet settings (pp. 16, 20-22) are real tables, with the printed × kept.
+- **Rendering:** Crossed poulet settings (pp. 16, 20-22, 28) are real tables, with the printed × kept.
 - **Rendering:** Row-label leader dots ("2 ans . . . .") in the tableaux are kept as printed.
 - **Rendering:** The tall brace before "ensuite comme ci-dessus…" (pp. 52-55) is drawn on its spanning cell.
 
@@ -29,6 +30,7 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 ## Page 5
 
+- **Layout:** No folio is printed on this page: the title stands in its place. The number stays in the markup, hidden.
 - **Image:** Fig. 2 is recropped from the 300 dpi scan and rotated about 0.7° to straighten it; it leans in the scan.
 
 ## Page 6
@@ -39,12 +41,13 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 - **Rendering:** "(poulets libres )" is printed with a thin space before ")", dropped (italic correction).
 - **Rendering:** "poulet a servant": this "a" is roman in the scan, unlike the other part letters.
-- **Layout:** Fig. 7 is printed at the foot of the left column, mid-paragraph; placed after the merged paragraph.
+- **Image:** The paper tone of Fig. 7 is cleaned to white.
+- **Layout:** Fig. 7 is printed at the foot of the left column, mid-paragraph; the paragraph is split around it, as printed.
 
 ## Page 8
 
 - **Doubtful:** "effleurer les aiguilles, le biseau tourné vers le haut." A raised printing lead sits on the mark after "aiguilles"; read as a comma. The old fragment's opening parenthesis is not supported, and there is no closing one.
-- **Image:** Fig. 8 has stray specks painted out.
+- **Image:** Fig. 8 has stray specks painted out; the plate number 1037 under it, missing from the earlier crop, is restored from the scan.
 
 ## Page 9
 
@@ -52,12 +55,12 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 ## Page 10
 
-- **Layout:** Fig. 11 is printed straddling both columns with narrowed text; now in the right column.
+- **Layout:** Fig. 11 is printed straddling both columns, with the left column narrowed around it; reproduced with a float that overhangs into the right column.
 - **Image:** Figs 12 and 13 are taken from the 300 dpi scan.
 
 ## Page 11
 
-- **Image:** Figs 14 and 15 are taken from the 300 dpi scan (the earlier assets had grey patches).
+- **Image:** Figs 14 and 15 are taken from the 300 dpi scan (the earlier assets had grey patches). The paper tone left along the edge of Fig. 14 is cleaned to white.
 
 ## Page 12
 
@@ -65,14 +68,15 @@ The comparison page shows these notes for the page in view. It reads this file d
 - **Doubtful:** "serre-fil: si au contraire" and "forte: il faut" look like colons at zoom, kept though semicolons would be expected.
 - **Doubtful:** "(fig. 2) sur": a raised lead right after the parenthesis may hide a comma; none transcribed.
 - **Doubtful:** "du 0": italic zero or O, transcribed as 0. "M 1 à M 4": printed with a space and full-size digits.
-- **Rendering:** The needle diagram's printed ellipsis of 8 dots at half the needle pitch is kept as 8 "·", although they stand for an elided stretch, not 8 out-of-work needles.
-- **Layout:** Fig. 16 is printed slightly wider than its column; scaled to fit. The table cross is a "×" character.
+- **Rendering:** The needle diagram's printed ellipsis of 8 baseline dots at half the needle pitch is kept as 8 lowered "·", although they stand for an elided stretch, not 8 out-of-work needles.
+- **Layout:** Fig. 16 is printed wider than its column, and the right column runs around it; reproduced. The table cross is a "×" character.
 - **Image:** Fig. 17 is taken from the 300 dpi scan (the earlier asset was wrong: ovals, no digits).
 
 ## Page 13
 
 - **Misprint:** "(voir fig 18)" without period after fig; "machine :" with space.
-- **Layout:** Fig. 18 is printed mid-paragraph and overhanging into the right column; now after the merged paragraph, in the left column. Fig. 19 and "Pour enlever…" no longer wrap; both fit the right column.
+- **Layout:** Figs 18 and 19 overhang the other column as printed, and the text runs around them. Fig. 18 splits the paragraph "(Suspendre les porte-poids…" at the same line as the print.
+- **Image:** Fig. 19 is recropped from the 300 dpi scan with its frame (the earlier asset lost the top of the picture).
 - **Image:** Fig. 18 is taken from the 300 dpi scan (the earlier asset had a damaged band).
 
 ## Page 14
@@ -83,7 +87,8 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 - **Misprint:** "chainette" without circumflex in "Terminer l'écharpe par la chainette".
 - **Rendering:** Figs 20 and 21 share one printed caption, so they are one figure with two images.
-- **Image:** Fig. 20 is recropped from the 300 dpi scan and squared up from its four corners; its frame is skewed in the scan.
+- **Image:** Figs 20 and 21 are recropped from the 300 dpi scan to the full printed picture and squared up from their four corners; they are skewed in the scan.
+- **Rendering:** "Faire la chaînette" is bold, as printed.
 
 ## Page 16
 
@@ -104,6 +109,7 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 ## Page 19
 
+- **Rendering:** In the needle diagrams of pp. 19, 21 and 22 the dots of the back row are full stops, on the baseline as printed; those of the front row are at mid height.
 - **Restored:** The first needle of the second needle diagram is hidden in the gutter and deduced.
 
 ## Page 20
@@ -129,6 +135,7 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 ## Page 24
 
+- **Rendering:** In both needle diagrams the dots of the upper row are full stops, on the baseline as printed; those of the lower row are at mid height.
 - **Misprint:** "les mailles, des aiguilles": comma as printed, could be a speck.
 - **Restored:** "pitons 1 et 3, changer": the comma is hidden in the fold; likewise "parfaite", "pour".
 - **Doubtful:** Plis creux diagram: the fourth star under the Avant row falls one position past the last printed needle (index 32), kept as printed. Both rows count 32 positions; Arrière is staggered half a pitch to the right.
@@ -145,16 +152,18 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 ## Page 28
 
+- **Rendering:** In the example headings of pp. 28-29 the ordinal ending is a small raised letter group (1er, 2me), as printed; ordinals in the running text stay flat.
 - **Rendering:** "toujours libres" is visibly bold in the scan and set in bold. Other dark words on this page look like heavy inking and are left plain.
 
 ## Page 29
 
 - **Misprint:** "que la 8me tour": printed "la" (not "le"), preserved.
-- **Rendering:** 9me exemple, 2nd diagram: the printed offset between rows is about 0.35 pitch from a half step (Arrière starts ~3.85 positions in); set at 3.5 positions. Layout is otherwise exact.
+- **Rendering:** 9me exemple, 2nd diagram: the printed offset between rows is about 0.35 pitch from a half step (Arrière starts ~3.85 positions in); reproduced by a small shift of the row. Layout is otherwise exact.
 
 ## Page 30
 
 - **Misprint:** "précédent" printed with acute accent, preserved.
+- **Image:** Figs 33-35 are recropped from the 300 dpi scan: in the print they form one framed picture split by thin white lines, and the old crops had lost the edges.
 
 ## Page 31
 
@@ -163,16 +172,17 @@ The comparison page shows these notes for the page in view. It reads this file d
 ## Page 32
 
 - **Image:** Fig. 36 is cropped from the 300 dpi scan and keeps a dark spot of the original print.
-- **Image:** Fig. 36 is recropped from the 300 dpi scan and rotated about 1° to straighten it; it leans in the scan.
+- **Image:** Fig. 36 is recropped from the 300 dpi scan and rotated about 1° to straighten it; it leans in the scan. The crop now keeps the whole bottom band of the sample, which is wider than the column as printed.
 
 ## Page 33
 
 - **Image:** Fig. 38 is recropped from the 300 dpi scan and rotated about 2° to straighten it; it leans in the scan.
+- **Image:** Fig. 37 is rectified from the 300 dpi scan with its thin frame, which the scan shows only faintly and is redrawn along its printed line.
 
 ## Page 34
 
 - **Rendering:** "à six couleurs." is visibly bold in the scan and set in bold. Other dark words on this page look like heavy inking and are left plain.
-- **Layout:** The italic paragraph "Cet appareil…" is broken by Fig. 39 in print (…prendre ou [fig.] abandonner…): kept as one paragraph with the figure after it.
+- **Layout:** The italic paragraph "Cet appareil…" is broken by Fig. 39 in print (…prendre ou [fig.] abandonner…): split around the figure, as printed.
 - **Image:** Figs 39 and 40 are cropped from the 300 dpi scan.
 - **Image:** Fig. 40 is recropped from the 300 dpi scan and rotated about 4.2° to straighten it; it leans in the scan.
 
@@ -191,15 +201,15 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 - **Misprint:** "L’Indicateur" and "Préparation du Super-8" have no trailing period in print; "L’Indicateur" runs on into "fixé à la barre…".
 - **Image:** Fig. 43 is cropped from the 300 dpi scan.
-- **Image:** Fig. 43 is recropped from the 300 dpi scan and rotated about 1.6° to straighten it; it leans in the scan.
+- **Image:** Fig. 43 is rectified from the 300 dpi scan with its printed frame; it leans in the scan.
 
 ## Page 39
 
-- **Image:** Fig. 44 is recropped from the 300 dpi scan and rotated about 1.7° to straighten it; it leans in the scan.
+- **Image:** Fig. 44 is rectified from the 300 dpi scan at full resolution with its printed frame; it leans in the scan.
 
 ## Page 40
 
-- **Image:** Fig. 45 is recropped from the 300 dpi scan and rotated about 1.4° to straighten it; it leans in the scan.
+- **Image:** Fig. 45 is rectified from the 300 dpi scan at full resolution with its printed frame; it leans in the scan.
 
 ## Page 41
 
@@ -213,12 +223,14 @@ The comparison page shows these notes for the page in view. It reads this file d
 ## Page 43
 
 - **Corrected:** "Voir table des mesures de gilets, page 23": the scan clearly reads 20, but the table is on page 23. This reference is corrected, unlike the other misprints, because it would send readers to the wrong page.
+- **Image:** Fig. 50 is cut again from the 300 dpi scan by its corners, at full resolution: the earlier crop lost the top and foot of the picture.
 
 ## Page 44
 
 - **Restored:** Ink holes in the print: "tricotées" ("tri…s,") and "les" fabricants ("l:s"), restored from sense.
 - **Restored:** "(fig 53)": the point after "fig" is not visible, assumed lost to ink wear and written "fig. 53".
-- **Image:** Figs 53 and 55 are recropped from the 300 dpi scan and rotated about 0.8° and 1° to straighten them; they lean in the scan.
+- **Image:** Fig. 53 is recropped from the 300 dpi scan and rotated about 0.8° to straighten it; it leans in the scan.
+- **Image:** Fig. 55 is cut again from the 300 dpi scan by its corners, at full resolution: the earlier crop lost the foot of the picture.
 
 ## Page 45
 
@@ -259,6 +271,7 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 ## Page 54
 
+- **Rendering:** Row labels on pp. 54-55 have fewer leader dots than on pp. 52-53, as printed.
 - **Rendering:** "au tableau No. G·" has a raised dot in the scan; transcribed as a period.
 
 ## Page 58
@@ -272,6 +285,7 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 ## Page 60
 
+- **Image:** Fig. 62 is recut from the 300 dpi scan by the corners of its printed frame.
 - **Misprint:** "bec fil vaniseur" (no hyphen) in the MR paragraph, "bec-fil" elsewhere; "extrêmités"; "certain, que".
 - **Doubtful:** "table MM, celle de 80 cm" and "4 blocs d’arrêt, permet": both marks look like periods at reading size, but a faint worn comma tail shows at high zoom; transcribed as commas.
 
@@ -284,4 +298,4 @@ The comparison page shows these notes for the page in view. It reads this file d
 - **Misprint:** "L’appareil de chevalement Super-8 se peut être mis en action": the scan reads "se" (sense requires "ne"; the old fragment had "ne").
 - **Misprint:** The last sentence ends "tirer le levier“." with a stray closing quote and no opening one.
 - **Misprint:** Title: capital C in "Chevalement"; the letter sits under an ink blot, but its height is a capital's.
-- **Image:** Fig. 65 is recropped from the 300 dpi scan and rotated about 1.1° to straighten it; it leans in the scan.
+- **Image:** Fig. 65 is recut from the 300 dpi scan by the corners of its printed frame, which straightens it; it leans about 1.1° in the scan.
