@@ -549,7 +549,6 @@ figure.left {
 #page-6 #fig-5 figcaption { margin-top: 19.5pt; }
 #page-7 { word-spacing: 1.2pt; }
 #page-7 #fig-6 { margin-bottom: 33pt !important; }
-#page-7 #fig-6 img { position: relative; left: 16pt; }
 #page-7 #fig-6 figcaption { margin-top: 18pt; }
 #page-7 #fig-7 { display: flex; align-items: center; gap: 35pt; margin: 33pt 0 0 25pt !important; }
 #page-7 #fig-7 img { margin: 0; }
@@ -1717,6 +1716,7 @@ figure.left {
 :is(#page-52, #page-53) .tab-head + .data col:first-child { width: 82.6pt; }
 :is(#page-54, #page-55) .tab-head + .data col { width: 29.4pt; }
 :is(#page-54, #page-55) .tab-head + .data col:first-child { width: 69.2pt; }
+:is(#page-52, #page-53, #page-54, #page-55) .tab-head + .data col:last-child { width: auto; }
 .tab-head + .data thead td { border-top: 0; }
 
 /* Page 58: two groups in one frame; the gauge heads sit between them. */
