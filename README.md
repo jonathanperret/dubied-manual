@@ -6,7 +6,7 @@ An HTML reproduction of the *Mode d'emploi* for Dubied hand knitting machines, i
 - [en.html](en.html) is a full English translation, built on the same page structure.
 - [compare.html](compare.html) shows each page beside the original scan, with its transcription notes.
 - [transcription-notes.md](transcription-notes.md) records misprints, doubtful readings and restored text.
-- [pdf/](pdf/) holds the original scan, with a searchable OCR layer.
+- [pdf/](pdf/) holds the original scan, with a searchable OCR layer, and PDFs of both versions.
 
 The scan is the authority. Peculiarities of the period style and spelling errors in the original are kept; other misprints are not generally meant to be.
 
@@ -28,6 +28,14 @@ python3 check_manual.py --print
 
 This must report 0 problems. `--print` also checks for 60 printed pages, and needs Google Chrome and `pdfinfo`.
 
+## Rebuilding the PDFs
+
+```sh
+python3 build_pdfs.py
+```
+
+This prints both versions to `pdf/` with Google Chrome and recompresses their images, so it needs `pikepdf` and `Pillow`. Run it after any edit to the manual.
+
 ## Licences
 
-The fonts are under the SIL Open Font License (`assets/LibreBodoni-OFL.txt`, `assets/OldStandard-OFL.txt`). PDF.js is under the Apache License 2.0 (`vendor/pdfjs/LICENSE`).
+The fonts are under the SIL Open Font License (`assets/LibreBodoni-OFL.txt`, `assets/OldStandard-OFL.txt`). `assets/libre-bodoni-slim-*` are Libre Bodoni with thinned outlines, for the lighter headings. PDF.js is under the Apache License 2.0 (`vendor/pdfjs/LICENSE`).

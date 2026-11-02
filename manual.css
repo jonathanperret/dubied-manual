@@ -18,6 +18,27 @@
   font-display: swap;
 }
 
+/* Libre Bodoni with thinned outlines and the same widths, for lighter headings. */
+@font-face {
+  font-family: "Libre Bodoni Slim";
+  src: url("assets/libre-bodoni-slim-regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Libre Bodoni Slim";
+  src: url("assets/libre-bodoni-slim-italic.woff2") format("woff2");
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Libre Bodoni Slim";
+  src: url("assets/libre-bodoni-bold.woff2") format("woff2");
+  font-weight: bold;
+  font-display: swap;
+}
+
 /* Fixed-pitch digits and needle marks: one character per needle. */
 @font-face {
   font-family: "Needles";
@@ -32,7 +53,9 @@
 :root {
   color: #111;
   background: #e6e5e2;
-  font-family: "Libre Bodoni", "Times New Roman", serif;
+  --face: "Libre Bodoni", "Times New Roman", serif;
+  --slim-face: "Libre Bodoni Slim", var(--face);
+  font-family: var(--face);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -180,16 +203,11 @@ a {
   break-after: avoid;
 }
 
-/* Printed headings are lighter than Libre Bodoni's regular, with wide word spaces:
-   a thin white stroke over the glyphs slims them. */
+/* Printed headings are lighter than Libre Bodoni's regular, with wide word spaces. */
 .page h2,
 .page h3 {
+  font-family: var(--slim-face);
   word-spacing: 0.22em;
-  -webkit-text-stroke: var(--slim) white;
-}
-
-.page {
-  --slim: 0.22pt;
 }
 
 .page h2 {
@@ -301,7 +319,7 @@ figcaption {
   line-height: 10.3pt;
   letter-spacing: 0.035em;
   word-spacing: 0.25em;
-  -webkit-text-stroke: 0.1pt white;
+  font-family: var(--slim-face);
 }
 
 figure.right,
@@ -1034,9 +1052,9 @@ figure.left {
 #page-20, #page-21, #page-22 { padding-bottom: 28pt; }
 
 /* The small column headings are set tight in the print, with a small numeral. */
-:is(#page-15, #page-17, #page-18, #page-21, #page-22) h3.side { --slim: 0.12pt; letter-spacing: 0; word-spacing: 0.08em; }
+:is(#page-15, #page-17, #page-18, #page-21, #page-22) h3.side { letter-spacing: 0; word-spacing: 0.08em; }
 :is(#page-17, #page-18) h3.side { padding-left: 0; text-indent: 0; }
-:is(#page-17, #page-18) h3.side small { font-size: 9.4pt; -webkit-text-stroke: 0; }
+:is(#page-17, #page-18) h3.side small { font-size: 9.4pt; font-family: var(--face); }
 
 /* Wide-pitch needle rows: dots on the baseline at the back, at mid height in front. */
 :is(#page-19, #page-21) .needles { margin: 5pt auto; }
@@ -1061,7 +1079,7 @@ figure.left {
 #page-14 h2 { margin-bottom: 12.5pt; }
 #page-14 h2.major { margin: 34pt 0 0; font-size: 17pt; line-height: 21pt; letter-spacing: 0; word-spacing: 0.3em; }
 #page-14 h3.title { margin: 22pt 0 7pt; font-size: 16.7pt; word-spacing: 0.2em; }
-#page-14 .poids caption { padding: 24pt 0 14pt; -webkit-text-stroke: var(--slim) white; word-spacing: 0.22em; }
+#page-14 .poids caption { padding: 24pt 0 14pt; font-family: var(--slim-face); word-spacing: 0.22em; }
 #page-14 .poids thead tr:first-child th { height: 21pt; }
 #page-14 .poids thead tr + tr th { height: 24pt; }
 #page-14 .poids tbody td { height: 51pt; }
@@ -1120,8 +1138,8 @@ figure.left {
 :is(#page-21, #page-22) .poulets td { min-width: 38pt; }
 #page-20 .col-break ~ p { margin-top: 5pt; }
 #page-20 h3.side { font-size: 14.2pt; line-height: 16pt; letter-spacing: 0; word-spacing: 0.05em; }
-#page-20 h2:not(.major) { margin-bottom: 14pt; font-size: 19.4pt; line-height: 25pt; letter-spacing: 0; word-spacing: 0.08em; --slim: 0.1pt; }
-#page-20 h2.major { margin-top: 26pt; font-size: 18pt; letter-spacing: 0; --slim: 0.1pt; }
+#page-20 h2:not(.major) { margin-bottom: 14pt; font-size: 19.4pt; line-height: 25pt; letter-spacing: 0; word-spacing: 0.08em; }
+#page-20 h2.major { margin-top: 26pt; font-size: 18pt; letter-spacing: 0; }
 
 #page-21 { padding-top: 59pt; }
 #page-21 #fig-24 { margin-top: -5pt !important; }
@@ -1504,7 +1522,6 @@ figure.left {
   letter-spacing: 0;
   white-space: nowrap;
   word-spacing: 0.12em;
-  --slim: 0.1pt;
 }
 
 .tab-subject {
@@ -1515,7 +1532,6 @@ figure.left {
   letter-spacing: 0;
   white-space: nowrap;
   word-spacing: var(--subj-ws, 0.25em);
-  --slim: 0.1pt;
 }
 
 .page .tab-spec {
@@ -1724,7 +1740,6 @@ figure.left {
   line-height: 19pt;
   letter-spacing: 0;
   word-spacing: 0.15em;
-  --slim: 0.1pt;
 }
 
 #page-58 .jauge p {
@@ -1812,17 +1827,17 @@ figure.left {
 
 
 /* Review of pages 23-32 against the scan */
-:is(#page-23, #page-24, #page-25, #page-26, #page-27, #page-28, #page-29, #page-30, #page-31, #page-32) h3 { --slim: 0.12pt; letter-spacing: 0; word-spacing: 0.08em; }
-:is(#page-26, #page-27, #page-30) h3 small { font-size: 10.4pt; -webkit-text-stroke: 0; }
-:is(#page-25, #page-27, #page-28, #page-30, #page-32) h2 { font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
-:is(#page-28, #page-29) h4.ex { -webkit-text-stroke: 0.12pt white; word-spacing: 0.1em; }
+:is(#page-23, #page-24, #page-25, #page-26, #page-27, #page-28, #page-29, #page-30, #page-31, #page-32) h3 { letter-spacing: 0; word-spacing: 0.08em; }
+:is(#page-26, #page-27, #page-30) h3 small { font-size: 10.4pt; font-family: var(--face); }
+:is(#page-25, #page-27, #page-28, #page-30, #page-32) h2 { font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; }
+:is(#page-28, #page-29) h4.ex { font-family: var(--slim-face); word-spacing: 0.1em; }
 :is(#page-28, #page-29) h4.ex sup { position: relative; top: -0.28em; font-size: 0.68em; line-height: 0; vertical-align: baseline; }
 
 #page-23 { padding-bottom: 36pt; }
 #page-23 #fig-28 + p { margin-bottom: 0; }
 #page-23 .cols #fig-28 + p + p { margin-top: 0; }
 #page-23 .mesures { margin: 0; table-layout: fixed; }
-#page-23 .mesures caption { padding: 55pt 0 7pt; font-size: 18pt; line-height: 21pt; letter-spacing: 0; word-spacing: 0.3em; -webkit-text-stroke: 0.1pt white; }
+#page-23 .mesures caption { padding: 55pt 0 7pt; font-size: 18pt; line-height: 21pt; letter-spacing: 0; word-spacing: 0.3em; font-family: var(--slim-face); }
 #page-23 .mesures th:first-child { width: 9.6%; }
 #page-23 .mesures thead tr:first-child th { height: 20pt; }
 #page-23 .mesures thead tr:first-child th:first-child { font-size: 10.25pt; letter-spacing: 0; }
@@ -1835,7 +1850,7 @@ figure.left {
 #page-23 #cardigan-sizes { border-top: 0.5pt solid #333; }
 #page-23 #cardigan-sizes caption { padding: 45pt 0 6pt; border: solid #333; border-width: 0 2pt; border-style: none double; }
 
-#page-24 h2.major { margin: 21pt 0 13pt; font-size: 17pt; letter-spacing: 0; --slim: 0.1pt; }
+#page-24 h2.major { margin: 21pt 0 13pt; font-size: 17pt; letter-spacing: 0; }
 #page-24 h3.side { margin: 16pt 0 9pt; }
 #page-24 hr { margin: 44pt auto 0; }
 #page-24 .needles { margin: 7pt 0 5pt; }
@@ -1886,7 +1901,7 @@ figure.left {
 #page-28 .cross td:first-child { width: 64%; }
 #page-28 .cross td:last-child { padding-right: 14pt; }
 #page-28 .poulets.cross tbody tr:nth-child(3n+1) td { border-bottom: 0; background: linear-gradient(currentColor, currentColor) center bottom / 24pt 0.6pt no-repeat; background-origin: content-box; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-#page-28 .cross tbody tr:nth-child(3) td { padding: 0 0 0 5.6pt; font-size: 28pt; line-height: 16.5pt; -webkit-text-stroke: 0.3pt white; }
+#page-28 .cross tbody tr:nth-child(3) td { padding: 0 0 0 5.6pt; font-size: 28pt; line-height: 16.5pt; font-family: var(--slim-face); }
 #page-28 .needles td:not(.etc) { letter-spacing: 4.1pt; }
 #page-28 .needles th { padding-left: 2pt; }
 #page-28 .needles td.shift { padding-left: 5pt; }
@@ -1951,20 +1966,20 @@ figure.left {
 #page-32 .star p.sign { left: -1em; }
 
 /* Review of pages 33-42 against the scan */
-:is(#page-33, #page-34, #page-35, #page-36, #page-37, #page-38, #page-39, #page-40, #page-41, #page-42) h3 { --slim: 0.12pt; letter-spacing: 0; word-spacing: 0.08em; }
-:is(#page-36, #page-37, #page-38, #page-39) h3.side { font-size: 16.4pt; word-spacing: 0.2em; --slim: 0.18pt; }
+:is(#page-33, #page-34, #page-35, #page-36, #page-37, #page-38, #page-39, #page-40, #page-41, #page-42) h3 { letter-spacing: 0; word-spacing: 0.08em; }
+:is(#page-36, #page-37, #page-38, #page-39) h3.side { font-size: 16.4pt; word-spacing: 0.2em; }
 :is(#page-40, #page-41, #page-42) h3 { font-size: 12.2pt; }
-:is(#page-40, #page-41, #page-42) h3 a { font-size: 10.25pt; -webkit-text-stroke: 0; }
-:is(#page-39, #page-40) h4.ex { -webkit-text-stroke: 0.12pt white; word-spacing: -0.08em; }
-#page-33 h2 { font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
-:is(#page-34, #page-36) h2.major { letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+:is(#page-40, #page-41, #page-42) h3 a { font-size: 10.25pt; font-family: var(--face); }
+:is(#page-39, #page-40) h4.ex { font-family: var(--slim-face); word-spacing: -0.08em; }
+#page-33 h2 { font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; }
+:is(#page-34, #page-36) h2.major { letter-spacing: 0; word-spacing: 0.25em; }
 #page-34 h2.major { margin: 12pt 0 21pt; font-size: 25pt; line-height: 28pt; }
 #page-36 h2.major { margin: 0 0 8pt; font-size: 27.5pt; line-height: 30pt; }
 
 /* Crossed settings as on p. 28: large thin X, short rules. */
 :is(#page-38, #page-40, #page-41, #page-42) .poulets.cross tbody tr:nth-child(3n+1) td { border-bottom: 0; background: linear-gradient(currentColor, currentColor) center bottom / 24pt 0.6pt no-repeat; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 :is(#page-40, #page-41, #page-42) .poulets.cross tbody tr:nth-child(3n+1) td { background-size: 40pt 0.6pt; }
-:is(#page-38, #page-40, #page-41, #page-42) .cross tbody tr:nth-child(3) td { padding: 0; font-size: 28pt; line-height: 16.5pt; -webkit-text-stroke: 0.3pt white; }
+:is(#page-38, #page-40, #page-41, #page-42) .cross tbody tr:nth-child(3) td { padding: 0; font-size: 28pt; line-height: 16.5pt; font-family: var(--slim-face); }
 :is(#page-40, #page-41, #page-42) .poulets td { min-width: 42pt; }
 #page-38 .poulets td { min-width: 30pt; }
 #page-38 .poulets thead th { border-bottom-width: 0.9pt; }
@@ -2008,7 +2023,7 @@ figure.left {
 #page-38 h3.side { margin-top: 14pt; }
 #page-38 .settings + p { word-spacing: 0.6pt; }
 #page-38 > .cols > h3:first-of-type { margin-top: 18pt; }
-:is(#page-38, #page-39) h4:not(.ex) { letter-spacing: 0.02em; -webkit-text-stroke: 0.08pt white; }
+:is(#page-38, #page-39) h4:not(.ex) { letter-spacing: 0.02em; font-family: var(--slim-face); }
 #page-38 h4 { margin: 7pt 0 5pt; }
 
 #page-39 { padding-bottom: 36pt; --para-gap: 0; }
@@ -2052,23 +2067,23 @@ figure.left {
 #page-42 p:has(+ p.more) { word-spacing: 0.9pt; }
 
 /* Review of pages 43-49, 56, 57 against the scan */
-:is(#page-43, #page-44, #page-45, #page-46, #page-47, #page-48, #page-49, #page-56, #page-57) h3 { --slim: 0.12pt; letter-spacing: 0; word-spacing: 0.08em; }
+:is(#page-43, #page-44, #page-45, #page-46, #page-47, #page-48, #page-49, #page-56, #page-57) h3 { letter-spacing: 0; word-spacing: 0.08em; }
 :is(#page-43, #page-44, #page-45, #page-46, #page-47, #page-48, #page-56) { padding-bottom: 36pt; }
-:is(#page-46, #page-49, #page-56) h2.major { margin: 0 0 7pt; font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+:is(#page-46, #page-49, #page-56) h2.major { margin: 0 0 7pt; font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; }
 :is(#page-43, #page-44, #page-45) .cols > figure:first-child, :is(#page-43, #page-44, #page-45) .cols > figure.col-break { margin-top: 0 !important; }
 
 /* Crossed settings as on pp. 40-42. */
 :is(#page-46, #page-56, #page-57) .poulets tbody td { border-bottom: 0; }
 #page-46 .talon tbody tr:nth-child(odd) td:not([rowspan]) { background: linear-gradient(currentColor, currentColor) center bottom / 27pt 0.6pt no-repeat; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-#page-46 .talon td[rowspan] { padding: 0; font-size: 28pt; line-height: 16.5pt; vertical-align: middle; -webkit-text-stroke: 0.3pt white; }
+#page-46 .talon td[rowspan] { padding: 0; font-size: 28pt; line-height: 16.5pt; vertical-align: middle; font-family: var(--slim-face); }
 #page-46 .talon td:not([rowspan]) { min-width: 27pt; padding: 0 0 1pt; line-height: 12pt; }
 :is(#page-56, #page-57) .poulets.cross { margin-left: -5pt; border-spacing: 5pt 0; }
 :is(#page-56, #page-57) .poulets.cross td { min-width: 50pt; }
 :is(#page-56, #page-57) .poulets.cross tr:nth-child(3n+1) td { background: linear-gradient(currentColor, currentColor) center bottom / 41pt 0.6pt no-repeat; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-:is(#page-56, #page-57) .poulets.cross tr.x td { padding: 0; font-size: 34pt; line-height: 16.5pt; -webkit-text-stroke: 0.3pt white; }
+:is(#page-56, #page-57) .poulets.cross tr.x td { padding: 0; font-size: 34pt; line-height: 16.5pt; font-family: var(--slim-face); }
 
 #page-43 { --para-gap: 2.6pt; }
-#page-43 h2 { margin-bottom: 8pt; font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-43 h2 { margin-bottom: 8pt; font-size: 18.3pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; }
 #page-43 p.voir { margin-bottom: 24pt; word-spacing: 3.2pt; }
 #page-43 #fig-49 figcaption { margin-top: 18pt; }
 #page-43 .pair figcaption { margin-top: 12pt; }
@@ -2115,7 +2130,7 @@ figure.left {
 #page-56 .needles th { padding-left: 3pt; }
 #page-56 .needles + .settings { margin-top: 0; }
 #page-56 h2.major { margin: 3pt 0 12pt; }
-#page-56 h2:not(.major) { margin-bottom: 8pt; font-size: 17.3pt; line-height: 20pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-56 h2:not(.major) { margin-bottom: 8pt; font-size: 17.3pt; line-height: 20pt; letter-spacing: 0; word-spacing: 0.25em; }
 #page-56 p.center { margin-bottom: 12pt; word-spacing: 3.4pt; }
 #page-56 #fig-60 { margin: 11pt 0 8pt !important; }
 #page-56 #fig-60 figcaption { margin-top: 11pt; }
@@ -2137,11 +2152,11 @@ figure.left {
 #page-49 .c > p:first-child { word-spacing: 0.6pt; }
 
 /* Framed notice: justified, large, in an even heavy frame. */
-#page-49 p.notice { margin-top: 59pt; padding: 26.5pt 28.5pt; border-width: 6.5pt; font-size: 17pt; line-height: 22pt; text-align: justify; text-align-last: center; -webkit-text-stroke: 0.15pt white; }
+#page-49 p.notice { margin-top: 59pt; padding: 26.5pt 28.5pt; border-width: 6.5pt; font-size: 17pt; line-height: 22pt; text-align: justify; text-align-last: center; font-family: var(--slim-face); }
 
 /* Review of pages 59-62 against the scan */
 #page-59 { padding-bottom: 28pt; word-spacing: 0.8pt; }
-#page-59 h2.major { margin: 4.6pt 0 8pt; font-size: 19.3pt; line-height: 24pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-59 h2.major { margin: 4.6pt 0 8pt; font-size: 19.3pt; line-height: 24pt; letter-spacing: 0; word-spacing: 0.25em; }
 #page-59 .cols p:nth-child(2):not(.col-break) { margin-top: 5pt; }
 #page-59 > hr { margin: 16pt auto 0; }
 #page-59 > hr + h2.major { margin: 20pt 0 5.5pt; font-size: 18.6pt; line-height: 25.4pt; word-spacing: 0.05em; text-align: justify; text-align-last: center; }
@@ -2176,7 +2191,7 @@ figure.left {
 #page-60 > hr { margin-top: 36pt; }
 
 #page-61 { padding-bottom: 28pt; --para-gap: 1.5pt; }
-#page-61 h2.major { margin: 2.6pt 0 3.5pt; font-size: 18.1pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-61 h2.major { margin: 2.6pt 0 3.5pt; font-size: 18.1pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; }
 #page-61 > p.flush { word-spacing: 3.2pt; }
 #page-61 .cols { margin-top: 18pt; }
 #page-61 h3.side { margin: 0 0 6pt; }
@@ -2193,7 +2208,7 @@ figure.left {
 #page-61 .poulets tbody :is(th, td) { line-height: 11.5pt; }
 
 #page-62 { --para-gap: 3pt; }
-#page-62 h2:not(.major) { margin: -5pt 0 16pt; font-size: 19.4pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; --slim: 0.1pt; }
+#page-62 h2:not(.major) { margin: -5pt 0 16pt; font-size: 19.4pt; line-height: 22pt; letter-spacing: 0; word-spacing: 0.25em; }
 #page-62 #fig-65 { margin-top: 11pt; }
 #page-62 #fig-65 figcaption { margin-top: 13pt; }
 #page-62 #fig-65 + p { margin-top: 23pt; }
