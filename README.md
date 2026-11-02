@@ -26,7 +26,7 @@ Then open <http://127.0.0.1:8765/>. The repo can also be published as is with Gi
 python3 check_manual.py --print
 ```
 
-This must report 0 problems. `--print` also checks for 60 printed pages, and needs Google Chrome and `pdfinfo`.
+This must report 0 problems. `--print` also checks the printed page count (60, or 61 in English with its notes page), and needs Google Chrome and `pdfinfo`.
 
 ## Rebuilding the PDFs
 

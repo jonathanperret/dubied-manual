@@ -132,6 +132,10 @@ a {
   text-align: left;
 }
 
+.print-only {
+  display: none;
+}
+
 /* Printed page */
 .page {
   position: relative;
@@ -2225,7 +2229,41 @@ figure.left {
     background: white;
   }
 
+  .front:not(:has(.tr-notes)),
+  .front > :not(.tr-notes),
+  .screen-only {
+    display: none;
+  }
+
+  .print-only {
+    display: inline;
+  }
+
+  /* The translator's notes open the printed English version, as a page of their own. */
   .front {
+    width: 540.236pt;
+    height: 728.5pt;
+    margin: 0;
+    padding: 50pt 45pt 55pt;
+    break-after: page;
+  }
+
+  .tr-notes {
+    margin: 0;
+    font-size: 10.25pt;
+    line-height: 14pt;
+  }
+
+  .tr-notes summary {
+    margin-bottom: 14pt;
+    font-family: var(--slim-face);
+    font-size: 18pt;
+    line-height: 22pt;
+    text-align: center;
+    list-style: none;
+  }
+
+  .tr-notes summary::-webkit-details-marker {
     display: none;
   }
 

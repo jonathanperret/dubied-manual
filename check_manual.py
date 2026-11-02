@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 FIRST_PAGE, LAST_PAGE = 3, 62
-PAGES = ("index.html", "en.html")
+PAGES = {"index.html": 60, "en.html": 61}  # printed pages: en.html opens with its notes
 VOID = {"meta", "link", "img", "br", "hr", "col"}
 OPENING = r"^[a-zà-ÿœ]"
 CLOSING = r"[.,:;!?»“)\]…*]$"
@@ -151,14 +151,13 @@ def printed_pages(name):
 
 def main():
     failed = False
-    for name in PAGES:
+    for name, expected in PAGES.items():
         html = (ROOT / name).read_text(encoding="utf8")
         manual = Manual()
         manual.feed(html)
         problems = check(manual, html)
         if "--print" in sys.argv:
             count = printed_pages(name)
-            expected = LAST_PAGE - FIRST_PAGE + 1
             if count != expected:
                 problems.append(f"prints to {count} pages, expected {expected}")
         for problem in problems:
