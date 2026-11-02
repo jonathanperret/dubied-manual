@@ -3,6 +3,7 @@
 An HTML reproduction of the *Mode d'emploi* for Dubied hand knitting machines, in French, from a 1930 printed manual.
 
 - [index.html](index.html) is the manual, with one `<article>` per printed page (3–62). It's hand-maintained, with no build step.
+- [en.html](en.html) is a full English translation, built on the same page structure.
 - [compare.html](compare.html) shows each page beside the original scan, with its transcription notes.
 - [transcription-notes.md](transcription-notes.md) records misprints kept on purpose, doubtful readings and restored text.
 - [pdf/](pdf/) holds the original scan, with a searchable OCR layer.

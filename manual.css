@@ -86,6 +86,28 @@ a {
   font-size: 0.9em;
 }
 
+.tr-notes {
+  margin: 0 0 12pt;
+  line-height: 15pt;
+}
+
+.tr-notes p {
+  margin: 8pt 0;
+  text-align: left;
+}
+
+.tr-notes table {
+  margin: 8pt auto;
+  border-collapse: collapse;
+}
+
+.tr-notes th,
+.tr-notes td {
+  padding: 1pt 10pt;
+  border-bottom: 0.5pt solid #0003;
+  text-align: left;
+}
+
 /* Printed page */
 .page {
   position: relative;

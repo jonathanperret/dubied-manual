@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regression checks for index.html. Usage: check_manual.py [--print]
+"""Regression checks for index.html and en.html. Usage: check_manual.py [--print]
 
 --print also renders to PDF with Chrome and checks the printed page count.
 """
@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 FIRST_PAGE, LAST_PAGE = 3, 62
+PAGES = ("index.html", "en.html")
 VOID = {"meta", "link", "img", "br", "hr", "col"}
 OPENING = r"^[a-zà-ÿœ]"
 CLOSING = r"[.,:;!?»“)\]…*]$"
@@ -135,13 +136,13 @@ def check(manual, html):
     return problems
 
 
-def printed_pages():
+def printed_pages(name):
     with tempfile.TemporaryDirectory() as tmp:
         pdf = Path(tmp) / "manual.pdf"
         subprocess.run(
             [CHROME, "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
              f"--user-data-dir={tmp}/profile", f"--print-to-pdf={pdf}",
-             (ROOT / "index.html").as_uri()],
+             (ROOT / name).as_uri()],
             check=True, capture_output=True, timeout=120,
         )
         info = subprocess.check_output(["pdfinfo", str(pdf)], text=True)
@@ -149,20 +150,23 @@ def printed_pages():
 
 
 def main():
-    html = (ROOT / "index.html").read_text(encoding="utf8")
-    manual = Manual()
-    manual.feed(html)
-    problems = check(manual, html)
-    if "--print" in sys.argv:
-        count = printed_pages()
-        expected = LAST_PAGE - FIRST_PAGE + 1
-        if count != expected:
-            problems.append(f"prints to {count} pages, expected {expected}")
-    for problem in problems:
-        print(problem)
-    print(f"{len(problems)} problem(s), {len(manual.pages)} pages, "
-          f"{len(manual.images)} images, {len(html) // 1024} KB of HTML")
-    return 1 if problems else 0
+    failed = False
+    for name in PAGES:
+        html = (ROOT / name).read_text(encoding="utf8")
+        manual = Manual()
+        manual.feed(html)
+        problems = check(manual, html)
+        if "--print" in sys.argv:
+            count = printed_pages(name)
+            expected = LAST_PAGE - FIRST_PAGE + 1
+            if count != expected:
+                problems.append(f"prints to {count} pages, expected {expected}")
+        for problem in problems:
+            print(f"{name}: {problem}")
+        print(f"{name}: {len(problems)} problem(s), {len(manual.pages)} pages, "
+              f"{len(manual.images)} images, {len(html) // 1024} KB of HTML")
+        failed = failed or bool(problems)
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":
