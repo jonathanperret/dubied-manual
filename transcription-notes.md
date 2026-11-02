@@ -1,6 +1,8 @@
 # Transcription notes
 
-Misprints kept as printed, doubtful readings and text restored where the scan is damaged. The scan is the authority for index.html.
+Misprints, doubtful readings and text restored where the scan is damaged. The scan is the authority for index.html.
+
+Peculiarities of the period style stay as printed: flat ordinals, leader dots, ditto marks and the like. So do spelling errors in the original text. Other misprints, such as a wrong page reference, are not generally meant to be kept. The misprints listed below are still in index.html as printed unless a note says otherwise.
 
 The comparison page shows these notes for the page in view. It reads this file directly, so keep the format: `## Page N` headings and one `- **Kind:** text` line per note, without nested lists.
 
@@ -210,7 +212,7 @@ The comparison page shows these notes for the page in view. It reads this file d
 
 ## Page 43
 
-- **Doubtful:** The old fragment said "page 23"; the scan clearly reads "page 20".
+- **Corrected:** "Voir table des mesures de gilets, page 23": the scan clearly reads 20, but the table is on page 23. This reference is corrected, unlike the other misprints, because it would send readers to the wrong page.
 
 ## Page 44
 
