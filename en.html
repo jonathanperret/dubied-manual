@@ -1,9 +1,22 @@
 <!doctype html>
 <html lang="en"><head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=1000">
+  <script>
+    // A narrow display zooms to the text block rather than the whole page.
+    function fitViewport() {
+      const portrait = matchMedia("(orientation: portrait)");
+      const sides = [screen.width, screen.height];
+      const width = portrait.matches ? Math.min(...sides) : Math.max(...sides);
+      const narrow = window === top && width < 720;
+      document.documentElement.classList.toggle("narrow", narrow);
+      document.querySelector("meta[name=viewport]").content = `width=${narrow ? 616 : 1000}`;
+      return portrait;
+    }
+    fitViewport().addEventListener("change", fitViewport);
+  </script>
   <title>Dubied — Complete Instruction Manual</title>
-  <link rel="stylesheet" href="manual.css?v=30">
+  <link rel="stylesheet" href="manual.css?v=32">
 </head>
 <body>
 <header class="front">
